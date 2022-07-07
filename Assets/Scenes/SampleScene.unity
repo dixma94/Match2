@@ -446,7 +446,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 3026021923024263232, guid: 9f894d3190a1e67489115248ab1c9dce, type: 3}
   spawnObject: {fileID: 638361657}
-  columnsCount: 5
+  columnsCount: 7
   rowsCount: 5
   cellMargin: 0.05
 --- !u!4 &1241703904
