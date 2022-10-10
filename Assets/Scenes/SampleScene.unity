@@ -176,7 +176,7 @@ Camera:
   far clip plane: 1000
   field of view: 19
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -199,7 +199,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -444,11 +444,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c70219dc66ccc84c961b78304a0d3ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellPrefab: {fileID: 3026021923024263232, guid: 9f894d3190a1e67489115248ab1c9dce, type: 3}
+  cellPrefab: {fileID: 3894650576433839945, guid: 9f894d3190a1e67489115248ab1c9dce, type: 3}
   spawnObject: {fileID: 638361657}
   columnsCount: 7
-  rowsCount: 5
-  cellMargin: 0.05
+  rowsCount: 7
+  cellMargin: 0.1
+  cellSize: 2
 --- !u!4 &1241703904
 Transform:
   m_ObjectHideFlags: 0

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CellSpawnManager : MonoBehaviour
 {
-    public GameObject cellPrefab;
+    public CellScript cellPrefab;
     public GameObject spawnObject;
-    public GameObject[,] cellsArray;
+    public CellScript[,] cellsArray;
 
     public int columnsCount, rowsCount;
     public float cellMargin;
+
+    public float cellSize = 1;
 
     void Start()
     {
@@ -20,33 +22,38 @@ public class CellSpawnManager : MonoBehaviour
 
     public void CreateTable(int columnsCount, int rowsCount)
     {
-        cellsArray = new GameObject[columnsCount, rowsCount];
-        for (int i = 0; i < columnsCount; i++)
+        cellsArray = new CellScript[columnsCount, rowsCount];
+        Vector2 startPos = FindStartPosition(columnsCount, rowsCount);
+        for (int col = 0; col < columnsCount; col++)
         {
-            for (int j = 0; j < rowsCount; j++)
+            for (int row = 0; row < rowsCount; row++)
             {
-                Vector3 startPos = FindStartPosition(columnsCount, rowsCount);
 
-                var shiftFromStart = new Vector3(startPos.x + i * (cellMargin + 1), startPos.y - j * (cellMargin + 1), 0);
-
-                var newCell = Instantiate(cellPrefab, shiftFromStart, cellPrefab.transform.rotation);
-
+                var shiftFromStart = GetShiftFromStart(col, row);
+                var newPosition = startPos + shiftFromStart;
+                var newCell = Instantiate<CellScript>(cellPrefab, newPosition, cellPrefab.transform.rotation);
                 newCell.transform.parent = spawnObject.transform;
-                cellsArray[i, j] = newCell;
+                newCell.coordinates = newPosition;
+                cellsArray[col, row] = newCell;
             }
         }
 
     }
-    public Vector3 FindStartPosition(float columnsCount, float rowsCount)
+
+    public Vector2 GetShiftFromStart(int col, int row)
     {
-        float startPosX = columnsCount >= 2 ? -(columnsCount - 1) / 2 - (columnsCount - 1) / 2 * cellMargin : 0;
-        float startPosY = rowsCount >= 2 ? (rowsCount - 1) / 2 + (rowsCount - 1) / 2 * cellMargin : 0;
-        return new Vector3(startPosX, startPosY);
+        return new Vector2(col * (cellSize + cellMargin), -row * (cellSize + cellMargin));
+    }
+    public Vector2 FindStartPosition(float columnsCount, float rowsCount)
+    {
+        float startPosX =-(columnsCount * cellSize + (columnsCount-1)*cellMargin)/2.0f + cellSize/2;
+        float startPosY = (rowsCount * cellSize + (rowsCount - 1) * cellMargin) / 2.0f - cellSize / 2;
+        return new Vector2(startPosX, startPosY);
     }
 
-    public Vector3 FindCellPosition(int xIndex, int yIndex)
+    public Vector2 FindCellPosition(int xIndex, int yIndex)
     {
-        return cellsArray[xIndex, yIndex].transform.position;
+        return FindCellPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
     }
 
     public (int, int) FindCellIndex(Vector3 cellPosition)
