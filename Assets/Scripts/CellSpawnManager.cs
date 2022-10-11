@@ -34,6 +34,8 @@ public class CellSpawnManager : MonoBehaviour
                 var newCell = Instantiate<CellScript>(cellPrefab, newPosition, cellPrefab.transform.rotation);
                 newCell.transform.parent = spawnObject.transform;
                 newCell.coordinates = newPosition;
+                newCell.row = row;
+                newCell.col = col;
                 cellsArray[col, row] = newCell;
             }
         }
@@ -56,25 +58,26 @@ public class CellSpawnManager : MonoBehaviour
         return FindCellPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
     }
 
-    public (int, int) FindCellIndex(Vector3 cellPosition)
+    public CellScript FindCell(Vector2 point)
     {
-        int columnsCount = cellsArray.GetUpperBound(0)+1;
-        int rowsCount = cellsArray.GetUpperBound(1)+1;
+        Debug.Log(point);
 
-        Vector3 startPos = FindStartPosition(columnsCount, rowsCount);
-
-        for (int i = 0; i < columnsCount; i++)
+        foreach (var cell in cellsArray)
         {
-            for (int j = 0; j < rowsCount; j++)
+            bool xStatement = cell.coordinates.x - cellSize / 2 >= point.x || point.x <= cell.coordinates.x + cellSize / 2;
+            bool yStatement = cell.coordinates.y - cellSize / 2 >= point.y || point.y <= cell.coordinates.y + cellSize / 2;
+
+            if ( xStatement && yStatement)
             {
-                var shiftFromStar = new Vector3(startPos.x + i * (cellMargin + 1), startPos.y - j * (cellMargin + 1), 0);
-                if (shiftFromStar == cellPosition)
-                {
-                    return (i, j);
-                }
-                
+                return cell;
             }
         }
-        return (-1, -1);
+        return null;
+    }
+    void OnMouseDown()
+    {
+        var cell = FindCell(Input.mousePosition);
+        if (cell != null)Debug.Log(cell.row.ToString()+" "+cell.col.ToString());
+        if (cell == null) Debug.Log("нет");
     }
 }

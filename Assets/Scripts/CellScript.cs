@@ -5,6 +5,7 @@ using UnityEngine;
 public class CellScript : MonoBehaviour
 {
     public Vector2 coordinates;
-    
+    public int row;
+    public int col;
   
 }
