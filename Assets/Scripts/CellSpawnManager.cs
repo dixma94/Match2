@@ -53,7 +53,7 @@ public class CellSpawnManager : MonoBehaviour
 
     public Vector2 FindCellPosition(int xIndex, int yIndex)
     {
-        return FindCellPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
+        return FindStartPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
     }
 
     public (int, int) FindCellIndex(Vector3 cellPosition)
