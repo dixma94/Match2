@@ -5,7 +5,24 @@ using UnityEngine;
 public class CellScript : MonoBehaviour
 {
     public Vector2 coordinates;
-    public int row;
-    public int col;
-  
+    public GameObject ship;
+    public CellManager cellManager;
+    public int Level;
+
+    public bool IsHaveShip
+    {
+        get 
+        {
+           return ship != null ? true: false;
+        }
+       
+    }
+
+    public void CreateShip(int level)
+    {
+        Level = level;
+        ship = Instantiate(cellManager.shipsArray[level], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
+        ship.transform.parent = this.transform;
+    }
+
 }

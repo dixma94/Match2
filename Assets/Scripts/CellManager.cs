@@ -1,23 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class CellSpawnManager : MonoBehaviour
+public class CellManager : MonoBehaviour
 {
     public CellScript cellPrefab;
     public GameObject spawnObject;
     public CellScript[,] cellsArray;
+    public GameObject[] shipsArray;
+
+ 
 
     public int columnsCount, rowsCount;
     public float cellMargin;
 
     public float cellSize = 1;
+   
 
     void Start()
     {
-
         CreateTable(columnsCount, rowsCount);
+        for (int i = 0; i < 2; i++)
+        {
+            CreateShips(0);
+        }
+       
 
+       
     }
 
     public void CreateTable(int columnsCount, int rowsCount)
@@ -32,10 +45,10 @@ public class CellSpawnManager : MonoBehaviour
                 var shiftFromStart = GetShiftFromStart(col, row);
                 var newPosition = startPos + shiftFromStart;
                 var newCell = Instantiate<CellScript>(cellPrefab, newPosition, cellPrefab.transform.rotation);
+                newCell.transform.name = col.ToString() + " " + row.ToString();
+                newCell.cellManager = this;
                 newCell.transform.parent = spawnObject.transform;
                 newCell.coordinates = newPosition;
-                newCell.row = row;
-                newCell.col = col;
                 cellsArray[col, row] = newCell;
             }
         }
@@ -46,6 +59,7 @@ public class CellSpawnManager : MonoBehaviour
     {
         return new Vector2(col * (cellSize + cellMargin), -row * (cellSize + cellMargin));
     }
+
     public Vector2 FindStartPosition(float columnsCount, float rowsCount)
     {
         float startPosX =-(columnsCount * cellSize + (columnsCount-1)*cellMargin)/2.0f + cellSize/2;
@@ -55,29 +69,34 @@ public class CellSpawnManager : MonoBehaviour
 
     public Vector2 FindCellPosition(int xIndex, int yIndex)
     {
-        return FindCellPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
+        return FindStartPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
     }
 
     public CellScript FindCell(Vector2 point)
     {
-        Debug.Log(point);
-
         foreach (var cell in cellsArray)
         {
-            bool xStatement = cell.coordinates.x - cellSize / 2 >= point.x || point.x <= cell.coordinates.x + cellSize / 2;
-            bool yStatement = cell.coordinates.y - cellSize / 2 >= point.y || point.y <= cell.coordinates.y + cellSize / 2;
+            var halfCellZize = cellSize/2 + cellMargin;
+            bool xStatement = cell.coordinates.x - halfCellZize >= point.x || point.x <= cell.coordinates.x + halfCellZize;
+            bool yStatement = cell.coordinates.y - halfCellZize <= point.y || point.y >= cell.coordinates.y + halfCellZize;
 
-            if ( xStatement && yStatement)
+            if (xStatement && yStatement)
             {
                 return cell;
             }
         }
         return null;
     }
-    void OnMouseDown()
+
+    public void CreateShips(int level)
     {
-        var cell = FindCell(Input.mousePosition);
-        if (cell != null)Debug.Log(cell.row.ToString()+" "+cell.col.ToString());
-        if (cell == null) Debug.Log("нет");
+        var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
+        var rnd =Random.Range(0, cells.Count());
+        cells.ElementAt(rnd).CreateShip(level);
     }
+
+
+
+   
+
 }
