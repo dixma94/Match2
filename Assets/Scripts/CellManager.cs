@@ -46,6 +46,8 @@ public class CellManager : MonoBehaviour
 
     }
 
+
+
     public Vector2 GetShiftFromStart(int col, int row)
     {
         return new Vector2(col * (cellSize + cellMargin), -row * (cellSize + cellMargin));
@@ -79,15 +81,27 @@ public class CellManager : MonoBehaviour
         return null;
     }
 
-    public void CreateShips(int level, int count)
+    public void CreateOneShip()
     {
-        for (int i = 0; i < count; i++)
-        {
-            var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
-            var rnd =Random.Range(0, cells.Count());
-            cells.ElementAt(rnd).CreateShip(level);
-        }
+        var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
+        var rnd =Random.Range(0, cells.Count());
+        cells.ElementAt(rnd).CreateShip(0);
     }
+
+    public void CreateShips()
+    {
+        var rndCount = Random.Range(1,shipsArray.Count());
+
+        for (int i = 0; i < rndCount; i++)
+        {
+            var cells = cellsArray.Cast<CellScript>().Where(cell => !cell.IsHaveShip);
+            var rndElement = Random.Range(0, cells.Count());
+            var rndLevel = Random.Range(0, shipsArray.Count());
+            cells.ElementAt(rndElement).CreateShip(rndLevel);
+        }
+
+    }
+
 
 
 

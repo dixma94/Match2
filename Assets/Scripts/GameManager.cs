@@ -14,16 +14,17 @@ public class GameManager : MonoBehaviour
     {
         addShipButton.GetComponent<Button>().onClick.AddListener(AddShip);
 
+        //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.CreateShips(0,2);
-
+        
+        //создаем поле для задания
         cellSpawnManager2.CreateTable(cellSpawnManager2.columnsCount, cellSpawnManager2.rowsCount);
-        cellSpawnManager2.CreateShips(0, 2);
+        cellSpawnManager2.CreateShips();
     }
 
     public void AddShip()
     {
-        cellSpawnManager.CreateShips(0,1);
+        cellSpawnManager.CreateOneShip();
     }
 
 
