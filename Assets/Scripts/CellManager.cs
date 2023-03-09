@@ -13,6 +13,7 @@ public class CellManager : MonoBehaviour
     public CellScript[,] cellsArray;
     public GameObject[] shipsArray;
 
+
  
 
     public int columnsCount, rowsCount;
@@ -21,18 +22,8 @@ public class CellManager : MonoBehaviour
     public float cellSize = 1;
    
 
-    void Start()
-    {
-        CreateTable(columnsCount, rowsCount);
-        for (int i = 0; i < 2; i++)
-        {
-            CreateShips(0);
-        }
-       
-
-       
-    }
-
+  
+    
     public void CreateTable(int columnsCount, int rowsCount)
     {
         cellsArray = new CellScript[columnsCount, rowsCount];
@@ -64,7 +55,7 @@ public class CellManager : MonoBehaviour
     {
         float startPosX =-(columnsCount * cellSize + (columnsCount-1)*cellMargin)/2.0f + cellSize/2;
         float startPosY = (rowsCount * cellSize + (rowsCount - 1) * cellMargin) / 2.0f - cellSize / 2;
-        return new Vector2(startPosX, startPosY);
+        return new Vector2(startPosX + spawnObject.transform.position.x, startPosY + spawnObject.transform.position.y);
     }
 
     public Vector2 FindCellPosition(int xIndex, int yIndex)
@@ -88,11 +79,14 @@ public class CellManager : MonoBehaviour
         return null;
     }
 
-    public void CreateShips(int level)
+    public void CreateShips(int level, int count)
     {
-        var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
-        var rnd =Random.Range(0, cells.Count());
-        cells.ElementAt(rnd).CreateShip(level);
+        for (int i = 0; i < count; i++)
+        {
+            var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
+            var rnd =Random.Range(0, cells.Count());
+            cells.ElementAt(rnd).CreateShip(level);
+        }
     }
 
 

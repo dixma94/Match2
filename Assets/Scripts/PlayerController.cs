@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     {
         //Получаем коллайдер и устанавливает его размер равным размеру поля
         collider = gameObject.GetComponent(typeof(BoxCollider2D)) as BoxCollider2D;
+        collider.transform.position = cellSpawnManager.spawnObject.transform.position;
         Vector2 tempVector =cellSpawnManager.GetShiftFromStart(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
         collider.size = new Vector2(tempVector.x, -tempVector.y);
     }
