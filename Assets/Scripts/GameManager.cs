@@ -17,14 +17,16 @@ public class GameManager : MonoBehaviour
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
         
-        //создаем поле для задания
-        cellSpawnManager2.CreateTable(cellSpawnManager2.columnsCount, cellSpawnManager2.rowsCount);
-        cellSpawnManager2.CreateShips();
+       
     }
 
     public void AddShip()
     {
-        cellSpawnManager.CreateOneShip();
+        //создаем поле для задания
+        cellSpawnManager2.DiscardTable();
+        cellSpawnManager2.CreateTable(cellSpawnManager2.columnsCount, cellSpawnManager2.rowsCount);
+        cellSpawnManager2.CreateShips();
+        
     }
 
 

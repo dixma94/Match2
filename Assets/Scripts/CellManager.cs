@@ -90,7 +90,7 @@ public class CellManager : MonoBehaviour
 
     public void CreateShips()
     {
-        var rndCount = Random.Range(1,shipsArray.Count());
+        var rndCount = Random.Range(1, cellsArray.Length);
 
         for (int i = 0; i < rndCount; i++)
         {
@@ -100,6 +100,18 @@ public class CellManager : MonoBehaviour
             cells.ElementAt(rndElement).CreateShip(rndLevel);
         }
 
+    }
+
+    public void DiscardTable()
+    {
+        if (cellsArray!=null)
+        {
+            foreach (var item in cellsArray)
+            {
+                Destroy(item.gameObject);
+            }
+        }
+       
     }
 
 
