@@ -81,14 +81,14 @@ public class CellManager : MonoBehaviour
         return null;
     }
 
-    public void CreateOneShip()
+    public void AddOneShip()
     {
         var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
         var rnd =Random.Range(0, cells.Count());
         cells.ElementAt(rnd).CreateShip(0);
     }
 
-    public void CreateShips()
+    public void AddShips()
     {
         var rndCount = Random.Range(1, cellsArray.Length);
 
@@ -96,7 +96,7 @@ public class CellManager : MonoBehaviour
         {
             var cells = cellsArray.Cast<CellScript>().Where(cell => !cell.IsHaveShip);
             var rndElement = Random.Range(0, cells.Count());
-            var rndLevel = Random.Range(0, shipsArray.Count());
+            var rndLevel = Random.Range(0, 2);
             cells.ElementAt(rndElement).CreateShip(rndLevel);
         }
 

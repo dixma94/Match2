@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public CellManager cellSpawnManager;
+    public GameManager gameManager;
     private BoxCollider2D collider;
 
     private CellScript firstTouch;
@@ -77,7 +78,14 @@ public class PlayerController : MonoBehaviour
 
         secondTouch.CreateShip(firstTouch.Level + 1);
 
-        
+
+        if (gameManager.Find() != -1)
+        {
+            Debug.Log("asda");
+            gameManager.cellSpawnManager2.DiscardTable();
+
+        }
+
 
     }
 }

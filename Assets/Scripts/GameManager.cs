@@ -16,23 +16,27 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
+        //создаем поле для задания
+        
+        cellSpawnManager2.CreateTable(cellSpawnManager2.columnsCount, cellSpawnManager2.rowsCount);
+        cellSpawnManager2.AddShips();
         
        
     }
 
     public void AddShip()
     {
-        //создаем поле для задания
-        cellSpawnManager2.DiscardTable();
-        cellSpawnManager2.CreateTable(cellSpawnManager2.columnsCount, cellSpawnManager2.rowsCount);
-        cellSpawnManager2.CreateShips();
 
-        Find();
+        cellSpawnManager.AddOneShip();
+    }
+
+    private void Update()
+    {
+       
     }
 
 
-
-    public void Find()
+    public int Find()
     {
         if (cellSpawnManager2 != null)
         {
@@ -49,10 +53,11 @@ public class GameManager : MonoBehaviour
                 levels += item.Level.ToString(); 
             }
 
-            int i = levels.IndexOf(task);
-            Debug.Log(i.ToString());
+            return levels.IndexOf(task);
+          
             
         }
+        return -1;
     }
 
 }
