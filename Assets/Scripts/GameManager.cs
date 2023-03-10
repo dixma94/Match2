@@ -26,8 +26,33 @@ public class GameManager : MonoBehaviour
         cellSpawnManager2.DiscardTable();
         cellSpawnManager2.CreateTable(cellSpawnManager2.columnsCount, cellSpawnManager2.rowsCount);
         cellSpawnManager2.CreateShips();
-        
+
+        Find();
     }
 
+
+
+    public void Find()
+    {
+        if (cellSpawnManager2 != null)
+        {
+            string task = null ;
+            string levels = null ;
+            foreach (var item in cellSpawnManager2.cellsArray)
+            {
+                task += item.Level.ToString();
+                    
+            }
+
+            foreach (var item in cellSpawnManager.cellsArray )
+            {
+                levels += item.Level.ToString(); 
+            }
+
+            int i = levels.IndexOf(task);
+            Debug.Log(i.ToString());
+            
+        }
+    }
 
 }
