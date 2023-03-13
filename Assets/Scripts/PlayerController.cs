@@ -50,14 +50,9 @@ public class PlayerController : MonoBehaviour
         secondTouch = cellSpawnManager.FindCell(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 
         //проверяем существует ли клетка и корабль
-        if (firstTouch ==null)
-        {
-            return;
-        }
-        if (!firstTouch.IsHaveShip)
-        {
-            return;
-        }
+        if (firstTouch ==null) return;
+        if (!firstTouch.IsHaveShip) return;
+
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
         if (secondTouch == null || secondTouch == firstTouch)
         {
@@ -70,17 +65,12 @@ public class PlayerController : MonoBehaviour
         {
             firstTouch.ship.transform.position = secondTouch.coordinates;
 
-            var StartCell = firstTouch.cellManager.cellsArray[firstTouch.ArrayIndexCol, firstTouch.ArrayIndexRow];
-            var FinalCell = secondTouch.cellManager.cellsArray[secondTouch.ArrayIndexCol, secondTouch.ArrayIndexRow];
+            cellSpawnManager.cellsArray[secondTouch.ArrayIndexCol, secondTouch.ArrayIndexRow].ship = firstTouch.ship;
+            cellSpawnManager.cellsArray[secondTouch.ArrayIndexCol, secondTouch.ArrayIndexRow].Level = firstTouch.Level;
+            cellSpawnManager.cellsArray[firstTouch.ArrayIndexCol, firstTouch.ArrayIndexRow].ship = null;
+            cellSpawnManager.cellsArray[firstTouch.ArrayIndexCol, firstTouch.ArrayIndexRow].Level = 0;
 
-            FinalCell.ship = firstTouch.ship;
-            FinalCell.Level = firstTouch.Level;
 
-
-            StartCell.ship = null;
-            StartCell.Level = 0;
-
-            var s = StartCell.cellManager.cellsArray;
             if (gameManager.Find() != -1)
             {
                 Debug.Log("asda");
@@ -90,11 +80,14 @@ public class PlayerController : MonoBehaviour
             return;
 
         }
+
+        //если уровни не совпадают возвращаем
         if (firstTouch.Level != secondTouch.Level)
         {
             firstTouch.ship.transform.position = new Vector3(firstTouch.coordinates.x, firstTouch.coordinates.y, -1);
             return;
         }
+
         //разрущаем корабли и создаем новый
         Destroy(firstTouch.ship);
         Destroy(secondTouch.ship);
