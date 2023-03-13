@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     {
         //Получаем коллайдер и устанавливает его размер равным размеру поля
         collider = gameObject.GetComponent(typeof(BoxCollider2D)) as BoxCollider2D;
-        collider.transform.position = cellSpawnManager.spawnObject.transform.position;
+        collider.transform.position = cellSpawnManager.transform.position;
         Vector2 tempVector =cellSpawnManager.GetShiftFromStart(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
         collider.size = new Vector2(tempVector.x, -tempVector.y);
     }
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         firstTouch.ship = null;
         secondTouch.ship = null;
 
-        secondTouch.CreateShip(firstTouch.Level + 1);
+        secondTouch.CreateShip(firstTouch.Level + 1,cellSpawnManager);
         firstTouch.Level = 0;
 
 

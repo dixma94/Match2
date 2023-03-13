@@ -6,7 +6,6 @@ public class CellScript : MonoBehaviour
 {
     public Vector2 coordinates;
     public GameObject ship;
-    public CellManager cellManager;
     public int Level;
 
     public bool IsHaveShip
@@ -20,7 +19,7 @@ public class CellScript : MonoBehaviour
     public int ArrayIndexCol { get; set; }
     public int ArrayIndexRow { get; set; }
 
-    public void CreateShip(int level)
+    public void CreateShip(int level,CellManager cellManager)
     {
         Level = level;
         ship = Instantiate(cellManager.shipsArray[level-1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);

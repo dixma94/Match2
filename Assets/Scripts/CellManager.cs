@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class CellManager : MonoBehaviour
 {
     public CellScript cellPrefab;
-    public GameObject spawnObject;
+    
     public CellScript[,] cellsArray;
     public GameObject[] shipsArray;
 
@@ -37,8 +37,7 @@ public class CellManager : MonoBehaviour
                 var newPosition = startPos + shiftFromStart;
                 var newCell = Instantiate<CellScript>(cellPrefab, newPosition, cellPrefab.transform.rotation);
                 newCell.transform.name = col.ToString() + " " + row.ToString();
-                newCell.cellManager = this;
-                newCell.transform.parent = spawnObject.transform;
+                newCell.transform.parent = transform;
                 newCell.coordinates = newPosition;
                 newCell.ArrayIndexCol = col;
                 newCell.ArrayIndexRow = row;
@@ -60,7 +59,7 @@ public class CellManager : MonoBehaviour
     {
         float startPosX =-(columnsCount * cellSize + (columnsCount-1)*cellMargin)/2.0f + cellSize/2;
         float startPosY = (rowsCount * cellSize + (rowsCount - 1) * cellMargin) / 2.0f - cellSize / 2;
-        return new Vector2(startPosX + spawnObject.transform.position.x, startPosY + spawnObject.transform.position.y);
+        return new Vector2(startPosX + transform.position.x, startPosY + transform.position.y);
     }
 
     public Vector2 FindCellPosition(int xIndex, int yIndex)
@@ -90,7 +89,7 @@ public class CellManager : MonoBehaviour
     {
         var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
         var rnd =Random.Range(0, cells.Count());
-        cells.ElementAt(rnd).CreateShip(1);
+        cells.ElementAt(rnd).CreateShip(1,this);
     }
 
     public void AddShips()
@@ -102,7 +101,7 @@ public class CellManager : MonoBehaviour
             var cells = cellsArray.Cast<CellScript>().Where(cell => !cell.IsHaveShip);
             var rndElement = Random.Range(0, cells.Count());
             var rndLevel = Random.Range(1, 5);
-            cells.ElementAt(rndElement).CreateShip(rndLevel);
+            cells.ElementAt(rndElement).CreateShip(rndLevel,this);
         }
 
     }
