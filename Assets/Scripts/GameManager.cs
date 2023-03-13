@@ -30,10 +30,7 @@ public class GameManager : MonoBehaviour
         cellSpawnManager.AddOneShip();
     }
 
-    private void Update()
-    {
-       
-    }
+   
 
 
     public int Find()

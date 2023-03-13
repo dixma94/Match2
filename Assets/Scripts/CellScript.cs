@@ -17,12 +17,15 @@ public class CellScript : MonoBehaviour
         }
        
     }
+    public int ArrayIndexCol { get; set; }
+    public int ArrayIndexRow { get; set; }
 
     public void CreateShip(int level)
     {
         Level = level;
-        ship = Instantiate(cellManager.shipsArray[level], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
+        ship = Instantiate(cellManager.shipsArray[level-1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
         ship.transform.parent = this.transform;
     }
+
 
 }

@@ -40,7 +40,10 @@ public class CellManager : MonoBehaviour
                 newCell.cellManager = this;
                 newCell.transform.parent = spawnObject.transform;
                 newCell.coordinates = newPosition;
+                newCell.ArrayIndexCol = col;
+                newCell.ArrayIndexRow = row;
                 cellsArray[col, row] = newCell;
+
             }
         }
 
@@ -81,11 +84,13 @@ public class CellManager : MonoBehaviour
         return null;
     }
 
+    
+
     public void AddOneShip()
     {
         var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
         var rnd =Random.Range(0, cells.Count());
-        cells.ElementAt(rnd).CreateShip(0);
+        cells.ElementAt(rnd).CreateShip(1);
     }
 
     public void AddShips()
@@ -96,7 +101,7 @@ public class CellManager : MonoBehaviour
         {
             var cells = cellsArray.Cast<CellScript>().Where(cell => !cell.IsHaveShip);
             var rndElement = Random.Range(0, cells.Count());
-            var rndLevel = Random.Range(0, 2);
+            var rndLevel = Random.Range(1, 5);
             cells.ElementAt(rndElement).CreateShip(rndLevel);
         }
 

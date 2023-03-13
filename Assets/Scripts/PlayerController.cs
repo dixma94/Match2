@@ -59,13 +59,38 @@ public class PlayerController : MonoBehaviour
             return;
         }
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
-        if (secondTouch == null)
+        if (secondTouch == null || secondTouch == firstTouch)
         {
             firstTouch.ship.transform.position = new Vector3(firstTouch.coordinates.x, firstTouch.coordinates.y, -1);
             return;
         }
-        // проверяем есть ли в клетке корабль, совпадают ли уровни и не перятянули ли на саму же себя
-        if (!secondTouch.IsHaveShip || firstTouch.Level != secondTouch.Level|| firstTouch == secondTouch)
+       
+        //если перетянули на пустую, перемещаем корабль
+        if (!secondTouch.IsHaveShip)
+        {
+            firstTouch.ship.transform.position = secondTouch.coordinates;
+
+            var StartCell = firstTouch.cellManager.cellsArray[firstTouch.ArrayIndexCol, firstTouch.ArrayIndexRow];
+            var FinalCell = secondTouch.cellManager.cellsArray[secondTouch.ArrayIndexCol, secondTouch.ArrayIndexRow];
+
+            FinalCell.ship = firstTouch.ship;
+            FinalCell.Level = firstTouch.Level;
+
+
+            StartCell.ship = null;
+            StartCell.Level = 0;
+
+            var s = StartCell.cellManager.cellsArray;
+            if (gameManager.Find() != -1)
+            {
+                Debug.Log("asda");
+                gameManager.cellSpawnManager2.DiscardTable();
+
+            }
+            return;
+
+        }
+        if (firstTouch.Level != secondTouch.Level)
         {
             firstTouch.ship.transform.position = new Vector3(firstTouch.coordinates.x, firstTouch.coordinates.y, -1);
             return;
@@ -77,6 +102,7 @@ public class PlayerController : MonoBehaviour
         secondTouch.ship = null;
 
         secondTouch.CreateShip(firstTouch.Level + 1);
+        firstTouch.Level = 0;
 
 
         if (gameManager.Find() != -1)
