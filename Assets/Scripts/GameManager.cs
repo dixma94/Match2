@@ -55,14 +55,15 @@ public class GameManager : MonoBehaviour
 
             for (int col = 0; col < collength+1; col++)
             {
-                if (col > colTasklength) continue;
+                //if (col > colTasklength) continue;
                 for (int row = 0; row < rowlength+1; row++)
                 {
-                    if (row > rowTasklength) continue;
+                    //if (row > rowTasklength) continue;
                     for (int colTask = 0; colTask < colTasklength+ 1; colTask++)
                     {
                         for (int rowTask = 0; rowTask < rowTasklength + 1; rowTask++)
                         {
+                            if (col + colTask > collength || row + rowTask > rowlength) continue;
                             temp += cellSpawnManager.cellsArray[col + colTask, row + rowTask].Level.ToString();
                         }
                     }

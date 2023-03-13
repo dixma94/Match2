@@ -75,7 +75,8 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.Log("asda");
                 gameManager.TaskManager.DiscardTable();
-
+                gameManager.TaskManager.CreateTable(gameManager.TaskManager.columnsCount, gameManager.TaskManager.rowsCount);
+                gameManager.TaskManager.AddShips();
             }
             return;
 
@@ -102,7 +103,9 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("asda");
             gameManager.TaskManager.DiscardTable();
-            
+            gameManager.TaskManager.CreateTable(gameManager.TaskManager.columnsCount, gameManager.TaskManager.rowsCount);
+            gameManager.TaskManager.AddShips();
+
         }
 
 
