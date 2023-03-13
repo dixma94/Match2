@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
 
     public CellManager cellSpawnManager;
-    public CellManager cellSpawnManager2;
+    public CellManager TaskManager;
     public Button addShipButton;
 
     private void Start()
@@ -18,8 +19,8 @@ public class GameManager : MonoBehaviour
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
         //создаем поле для задания
         
-        cellSpawnManager2.CreateTable(cellSpawnManager2.columnsCount, cellSpawnManager2.rowsCount);
-        cellSpawnManager2.AddShips();
+        TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
+        TaskManager.AddShips();
         
        
     }
@@ -35,26 +36,44 @@ public class GameManager : MonoBehaviour
 
     public int Find()
     {
-        if (cellSpawnManager2 != null)
+        if (TaskManager != null)
         {
-            string task = null ;
-            string levels = null ;
-            foreach (var item in cellSpawnManager2.cellsArray)
+            string task = null;
+
+            int colTasklength = TaskManager.cellsArray.GetUpperBound(0);
+            int rowTasklength = TaskManager.cellsArray.GetUpperBound(1);
+            int collength = cellSpawnManager.cellsArray.GetUpperBound(0);
+            int rowlength = cellSpawnManager.cellsArray.GetUpperBound(1);
+
+            string temp = null;
+
+            foreach (var item in TaskManager.cellsArray)
             {
                 task += item.Level.ToString();
-                    
+
             }
 
-            foreach (var item in cellSpawnManager.cellsArray )
+            for (int col = 0; col < collength+1; col++)
             {
-                levels += item.Level.ToString(); 
+                if (col > colTasklength) continue;
+                for (int row = 0; row < rowlength+1; row++)
+                {
+                    if (row > rowTasklength) continue;
+                    for (int colTask = 0; colTask < colTasklength+ 1; colTask++)
+                    {
+                        for (int rowTask = 0; rowTask < rowTasklength + 1; rowTask++)
+                        {
+                            temp += cellSpawnManager.cellsArray[col + colTask, row + rowTask].Level.ToString();
+                        }
+                    }
+                    if (temp == task) return 1;
+                    temp = null;
+                }
             }
 
-            return levels.IndexOf(task);
-          
-            
         }
         return -1;
+
     }
 
 }

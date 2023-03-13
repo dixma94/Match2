@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
             if (gameManager.Find() != -1)
             {
                 Debug.Log("asda");
-                gameManager.cellSpawnManager2.DiscardTable();
+                gameManager.TaskManager.DiscardTable();
 
             }
             return;
@@ -98,11 +98,11 @@ public class PlayerController : MonoBehaviour
         firstTouch.Level = 0;
 
 
-        if (gameManager.Find() != -1)
+        if (gameManager.Find() == 1)
         {
             Debug.Log("asda");
-            gameManager.cellSpawnManager2.DiscardTable();
-
+            gameManager.TaskManager.DiscardTable();
+            
         }
 
 
