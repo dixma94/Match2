@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public CellManager TaskManager;
     public Button addShipButton;
 
+    private int maxlevel=2;
+
     private void Start()
     {
         addShipButton.GetComponent<Button>().onClick.AddListener(AddShip);
@@ -20,7 +22,7 @@ public class GameManager : MonoBehaviour
         //создаем поле дл€ задани€
         
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
-        TaskManager.AddShips();
+        TaskManager.CreateTask(maxlevel, 7);
         
        
     }
@@ -28,13 +30,13 @@ public class GameManager : MonoBehaviour
     public void AddShip()
     {
 
-        cellSpawnManager.AddOneShip();
+        cellSpawnManager.AddShip(1,1);
     }
 
    
 
 
-    public int Find()
+    public int FindTask()
     {
         if (TaskManager != null)
         {
@@ -77,4 +79,15 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void RefreshTask()
+    {
+        if (FindTask() != -1)
+            {
+                Debug.Log("«адание выполнено");
+                TaskManager.DiscardTable();
+                TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
+                maxlevel++;
+                TaskManager.CreateTask(maxlevel, 7);
+            }
+    }
 }

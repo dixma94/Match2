@@ -26,17 +26,13 @@ public class PlayerController : MonoBehaviour
     {
         if (firstTouch.IsHaveShip)
         {
-            firstTouch.ship.transform.position = GetMousePosition();
+            var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePos.z = -1;
+            firstTouch.ship.transform.position = mousePos;
         }
     }
     
-    private Vector3 GetMousePosition()
-    {
-        var mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = -1;
-        return mousePos;
-    }
-
+    
     //Берем клетку на которую нажали
     private void OnMouseDown()
     {
@@ -71,13 +67,7 @@ public class PlayerController : MonoBehaviour
             cellSpawnManager.cellsArray[firstTouch.ArrayIndexCol, firstTouch.ArrayIndexRow].Level = 0;
 
 
-            if (gameManager.Find() != -1)
-            {
-                Debug.Log("asda");
-                gameManager.TaskManager.DiscardTable();
-                gameManager.TaskManager.CreateTable(gameManager.TaskManager.columnsCount, gameManager.TaskManager.rowsCount);
-                gameManager.TaskManager.AddShips();
-            }
+            gameManager.RefreshTask();
             return;
 
         }
@@ -94,19 +84,11 @@ public class PlayerController : MonoBehaviour
         Destroy(secondTouch.ship);
         firstTouch.ship = null;
         secondTouch.ship = null;
-
         secondTouch.CreateShip(firstTouch.Level + 1,cellSpawnManager);
         firstTouch.Level = 0;
 
 
-        if (gameManager.Find() == 1)
-        {
-            Debug.Log("asda");
-            gameManager.TaskManager.DiscardTable();
-            gameManager.TaskManager.CreateTable(gameManager.TaskManager.columnsCount, gameManager.TaskManager.rowsCount);
-            gameManager.TaskManager.AddShips();
-
-        }
+        gameManager.RefreshTask();
 
 
     }

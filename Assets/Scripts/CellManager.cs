@@ -85,22 +85,27 @@ public class CellManager : MonoBehaviour
 
     
 
-    public void AddOneShip()
+    public void AddShip(int count, int level)
     {
-        var  cells =  cellsArray.Cast<CellScript>().Where(cell=>!cell.IsHaveShip);
-        var rnd =Random.Range(0, cells.Count());
-        cells.ElementAt(rnd).CreateShip(1,this);
+        for (int i = 0; i < count; i++)
+        {
+            var cells = cellsArray.Cast<CellScript>().Where(cell => !cell.IsHaveShip);
+            var rnd = Random.Range(0, cells.Count());
+            cells.ElementAt(rnd).CreateShip(level, this);
+        }
+        
     }
 
-    public void AddShips()
+    public void CreateTask(int maxLevel, int shipsCount)
     {
-        var rndCount = Random.Range(1, cellsArray.Length);
+        if (shipsCount > cellsArray.Length || maxLevel>shipsArray.Length) return;
 
-        for (int i = 0; i < rndCount; i++)
+
+        for (int i = 0; i < shipsCount; i++)
         {
             var cells = cellsArray.Cast<CellScript>().Where(cell => !cell.IsHaveShip);
             var rndElement = Random.Range(0, cells.Count());
-            var rndLevel = Random.Range(1, 5);
+            var rndLevel = Random.Range(1, maxLevel);
             cells.ElementAt(rndElement).CreateShip(rndLevel,this);
         }
 
