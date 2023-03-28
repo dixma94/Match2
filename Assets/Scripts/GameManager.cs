@@ -33,55 +33,48 @@ public class GameManager : MonoBehaviour
         cellSpawnManager.AddShip(1,1);
     }
 
-   
 
 
-    public int FindTask()
+
+    public bool FindTask()
     {
-        if (TaskManager != null)
+        if (TaskManager == null) return false;
+
+        string task = null;
+        string table = null;
+
+        int coltask = TaskManager.columnsCount;
+        int rowtask = TaskManager.rowsCount;
+        int rowtable = cellSpawnManager.rowsCount;
+
+        foreach (var item in TaskManager.cellsArray)
         {
-            string task = null;
-
-            int colTasklength = TaskManager.cellsArray.GetUpperBound(0);
-            int rowTasklength = TaskManager.cellsArray.GetUpperBound(1);
-            int collength = cellSpawnManager.cellsArray.GetUpperBound(0);
-            int rowlength = cellSpawnManager.cellsArray.GetUpperBound(1);
-
-            string temp = null;
-
-            foreach (var item in TaskManager.cellsArray)
-            {
-                task += item.Level.ToString();
-
-            }
-
-            for (int col = 0; col < collength+1; col++)
-            {
-                //if (col > colTasklength) continue;
-                for (int row = 0; row < rowlength+1; row++)
-                {
-                    //if (row > rowTasklength) continue;
-                    for (int colTask = 0; colTask < colTasklength+ 1; colTask++)
-                    {
-                        for (int rowTask = 0; rowTask < rowTasklength + 1; rowTask++)
-                        {
-                            if (col + colTask > collength || row + rowTask > rowlength) continue;
-                            temp += cellSpawnManager.cellsArray[col + colTask, row + rowTask].Level.ToString();
-                        }
-                    }
-                    if (temp == task) return 1;
-                    temp = null;
-                }
-            }
+            task += item.Level.ToString();
 
         }
-        return -1;
+        foreach (var item in cellSpawnManager.cellsArray)
+        {
+            table += item.Level.ToString();
+        }
+
+        for (int i = 0; i < (table.Length - rowtable * (coltask - 1)); i++)
+        {
+            string temp = null;
+            for (int j = 0; j < coltask; j++)
+            {
+                temp += table.Substring((i + rowtable * j), rowtask);
+            }
+            if (temp.Equals(task)) return true;
+
+
+        }
+        return false;
+            
 
     }
-
     public void RefreshTask()
     {
-        if (FindTask() != -1)
+        if (FindTask())
             {
                 Debug.Log("Задание выполнено");
                 TaskManager.DiscardTable();
