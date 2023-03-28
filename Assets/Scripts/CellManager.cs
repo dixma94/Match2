@@ -16,17 +16,32 @@ public class CellManager : MonoBehaviour
 
  
 
-    public int columnsCount, rowsCount;
+   
     public float cellMargin;
 
     public float cellSize = 1;
-   
 
-  
-    
+    private int columnsCount;
+    public int ColumnsCount
+    {
+        get { return columnsCount; }
+       
+    }
+    private int rowsCount;
+    public int RowsCount
+    {
+        get { return rowsCount; }
+       
+    }
+
+
+
+
     public void CreateTable(int columnsCount, int rowsCount)
     {
         cellsArray = new CellScript[columnsCount, rowsCount];
+        this.columnsCount = columnsCount;
+        this.rowsCount = rowsCount;
         Vector2 startPos = FindStartPosition(columnsCount, rowsCount);
         for (int col = 0; col < columnsCount; col++)
         {
