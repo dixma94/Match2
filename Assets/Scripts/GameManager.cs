@@ -18,10 +18,10 @@ public class GameManager : MonoBehaviour
         addShipButton.GetComponent<Button>().onClick.AddListener(AddShip);
 
         //создаем поле для игры
-        cellSpawnManager.CreateTable(7, 7);
+        cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
         //создаем поле для задания
         
-        TaskManager.CreateTable(3, 3);
+        TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
         TaskManager.CreateTask(maxlevel, 7);
         
        
@@ -43,9 +43,9 @@ public class GameManager : MonoBehaviour
         string task = null;
         string table = null;
 
-        int coltask = TaskManager.ColumnsCount;
-        int rowtask = TaskManager.RowsCount;
-        int rowtable = cellSpawnManager.RowsCount;
+        int coltask = TaskManager.columnsCount;
+        int rowtask = TaskManager.rowsCount;
+        int rowtable = cellSpawnManager.rowsCount;
 
         foreach (var item in TaskManager.cellsArray)
         {
@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Задание выполнено");
                 TaskManager.DiscardTable();
-                TaskManager.CreateTable(3, 3);
+                TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
                 maxlevel++;
                 TaskManager.CreateTask(maxlevel, 7);
             }
