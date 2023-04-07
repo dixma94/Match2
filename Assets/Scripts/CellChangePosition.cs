@@ -9,19 +9,21 @@ public  class CellChangePosition :MonoBehaviour
     private CellManager _cellManager;
     private InputHandler _inputHandler;
 
+    public UnityEvent RefreshTask;
+
     CellScript firstCell;
     CellScript secondCell;
-    private void Start()
+    private void Awake()
     {
       _cellManager = GetComponent<CellManager>();
       _inputHandler = GetComponent<InputHandler>();
-        _inputHandler.ShipUp += PickShip;
-        _inputHandler.ShipDrag += DragShip;
-        _inputHandler.ShipDown += DownShip;
+
     }
     private void OnEnable()
     {
-
+        _inputHandler.ShipUp += PickShip;
+        _inputHandler.ShipDrag += DragShip;
+        _inputHandler.ShipDown += DownShip;
     }
 
     private void OnDisable()
@@ -32,14 +34,15 @@ public  class CellChangePosition :MonoBehaviour
     }
     private CellScript PickShip( Vector2 vector)
     {
-        CellScript cell = _cellManager.FindCell(vector);
-        return cell;
+        firstCell = _cellManager.FindCell(vector);
+        return firstCell;
     }
 
     private void DragShip(Vector3 vector)
     {
-        vector.z = -1;
-        firstCell.ship.transform.position = vector;
+        Vector3 vector3 = vector;
+        vector3.z = -1;
+        firstCell.ship.transform.position = vector3;
     }
 
     private void DownShip(Vector2 vector)
@@ -65,7 +68,7 @@ public  class CellChangePosition :MonoBehaviour
             _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].Level = 0;
 
 
-            //gameManager.RefreshTask();
+            RefreshTask.Invoke();
             return;
 
         }
@@ -77,16 +80,16 @@ public  class CellChangePosition :MonoBehaviour
             return;
         }
 
-        //    //разрущаем корабли и создаем новый
+        //разрущаем корабли и создаем новый
         Destroy(firstCell.ship);
         Destroy(secondCell.ship);
         firstCell.ship = null;
-        secondCell.ship = null;
+
         secondCell.CreateShip(firstCell.Level + 1, _cellManager);
         firstCell.Level = 0;
 
 
-        //    gameManager.RefreshTask();
+        RefreshTask.Invoke();
     }
 
 }

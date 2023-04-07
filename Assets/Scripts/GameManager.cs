@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
         TaskManager.CreateTask(maxlevel, 7);
 
-   
+        cellSpawnManager.GetComponent<CellChangePosition>().RefreshTask.AddListener(RefreshTask);
+        
     }
 
     public void AddShip()
@@ -73,15 +74,15 @@ public class GameManager : MonoBehaviour
             
 
     }
-    public void RefreshTask( CellManager taskManager)
+    public void RefreshTask()
     {
-        if (FindTask(cellSpawnManager, taskManager))
-            {
-                Debug.Log("Задание выполнено");
-                taskManager.DiscardTable();
-                taskManager.CreateTable(taskManager.columnsCount, taskManager.rowsCount);
-                maxlevel++;
-                taskManager.CreateTask(maxlevel, 7);
-            }
+        if (FindTask(cellSpawnManager, TaskManager))
+        {
+            Debug.Log("Задание выполнено");
+            TaskManager.DiscardTable();
+            TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
+            maxlevel++;
+            TaskManager.CreateTask(maxlevel, 7);
+        }
     }
 }

@@ -10,6 +10,8 @@ public class InputHandler : MonoBehaviour
     public Action<Vector3> ShipDrag;
     public Action<Vector2> ShipDown;
 
+    [SerializeField] private Camera _camera;
+
     private CellScript cell;
 
     // Update is called once per frame
@@ -20,7 +22,7 @@ public class InputHandler : MonoBehaviour
         { 
             if(ShipUp != null)
             {
-               cell = ShipUp.Invoke(Input.mousePosition);
+               cell = ShipUp.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
             }
            
         }
@@ -31,7 +33,7 @@ public class InputHandler : MonoBehaviour
             {
                 if (cell.ship != null)
                 {
-                    ShipDrag.Invoke(Input.mousePosition);
+                    ShipDrag.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
                 }
             }
         }
@@ -39,7 +41,7 @@ public class InputHandler : MonoBehaviour
         {
             if(ShipDown != null && cell != null)
             {
-                ShipDown.Invoke(Input.mousePosition);
+                ShipDown.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
                 cell = null;
             }
         }
