@@ -9,13 +9,13 @@ public class GameManager : MonoBehaviour
 
     public CellManager cellSpawnManager;
     public CellManager TaskManager;
-    public Button addShipButton;
+    
 
-    private int maxlevel=2;
+    private int maxlevel=3;
 
     private void Start()
     {
-        addShipButton.GetComponent<Button>().onClick.AddListener(AddShip);
+       
 
         //создаем поле дл€ игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
         
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
         TaskManager.CreateTask(maxlevel, 7);
-        
-       
+
+   
     }
 
     public void AddShip()
@@ -33,26 +33,27 @@ public class GameManager : MonoBehaviour
         cellSpawnManager.AddShip(1,1);
     }
 
+   
 
 
 
-    public bool FindTask()
+    public bool FindTask(CellManager cellManager, CellManager taskManager)
     {
-        if (TaskManager == null) return false;
+        if (taskManager == null) return false;
 
         string task = null;
         string table = null;
 
-        int coltask = TaskManager.columnsCount;
-        int rowtask = TaskManager.rowsCount;
-        int rowtable = cellSpawnManager.rowsCount;
+        int coltask = taskManager.columnsCount;
+        int rowtask = taskManager.rowsCount;
+        int rowtable = cellManager.rowsCount;
 
-        foreach (var item in TaskManager.cellsArray)
+        foreach (var item in taskManager.cellsArray)
         {
             task += item.Level.ToString();
 
         }
-        foreach (var item in cellSpawnManager.cellsArray)
+        foreach (var item in cellManager.cellsArray)
         {
             table += item.Level.ToString();
         }
@@ -72,15 +73,15 @@ public class GameManager : MonoBehaviour
             
 
     }
-    public void RefreshTask()
+    public void RefreshTask( CellManager taskManager)
     {
-        if (FindTask())
+        if (FindTask(cellSpawnManager, taskManager))
             {
                 Debug.Log("«адание выполнено");
-                TaskManager.DiscardTable();
-                TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
+                taskManager.DiscardTable();
+                taskManager.CreateTable(taskManager.columnsCount, taskManager.rowsCount);
                 maxlevel++;
-                TaskManager.CreateTask(maxlevel, 7);
+                taskManager.CreateTask(maxlevel, 7);
             }
     }
 }

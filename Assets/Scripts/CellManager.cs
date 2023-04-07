@@ -21,11 +21,12 @@ public class CellManager : MonoBehaviour
 
     public float cellSize = 1;
    
-
+    
   
     
     public void CreateTable(int columnsCount, int rowsCount)
     {
+        
         cellsArray = new CellScript[columnsCount, rowsCount];
         Vector2 startPos = FindStartPosition(columnsCount, rowsCount);
         for (int col = 0; col < columnsCount; col++)
@@ -39,8 +40,8 @@ public class CellManager : MonoBehaviour
                 newCell.transform.name = col.ToString() + " " + row.ToString();
                 newCell.transform.parent = transform;
                 newCell.coordinates = newPosition;
-                newCell.ArrayIndexCol = col;
-                newCell.ArrayIndexRow = row;
+                newCell.ArrayColIndex = col;
+                newCell.ArrayRowIndex = row;
                 cellsArray[col, row] = newCell;
 
             }
@@ -72,8 +73,8 @@ public class CellManager : MonoBehaviour
         foreach (var cell in cellsArray)
         {
             var halfCellZize = cellSize/2 + cellMargin;
-            bool xStatement = cell.coordinates.x - halfCellZize >= point.x || point.x <= cell.coordinates.x + halfCellZize;
-            bool yStatement = cell.coordinates.y - halfCellZize <= point.y || point.y >= cell.coordinates.y + halfCellZize;
+            bool xStatement = cell.coordinates.x - halfCellZize <= point.x && point.x <= cell.coordinates.x + halfCellZize;
+            bool yStatement = cell.coordinates.y - halfCellZize <= point.y && point.y <= cell.coordinates.y + halfCellZize;
 
             if (xStatement && yStatement)
             {
@@ -122,8 +123,7 @@ public class CellManager : MonoBehaviour
         }
        
     }
-
-
+   
 
 
    

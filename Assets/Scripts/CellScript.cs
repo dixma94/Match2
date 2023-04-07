@@ -16,8 +16,8 @@ public class CellScript : MonoBehaviour
         }
        
     }
-    public int ArrayIndexCol { get; set; }
-    public int ArrayIndexRow { get; set; }
+    public int ArrayColIndex { get; set; }
+    public int ArrayRowIndex { get; set; }
 
     public void CreateShip(int level,CellManager cellManager)
     {
