@@ -817,6 +817,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e48df1f79a82914685583a87236461e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 519420031}
 --- !u!114 &1241703906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -829,6 +830,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b280ecb0d26bc4ba3bdd2cfff5486f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RefreshTask:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1560195917
 GameObject:
   m_ObjectHideFlags: 0
