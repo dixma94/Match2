@@ -58,18 +58,20 @@ public class GameManager : MonoBehaviour
         {
             table += item.Level.ToString();
         }
-
-        for (int i = 0; i < (table.Length - rowtable * (coltask - 1)); i++)
-        {
-            string temp = null;
-            for (int j = 0; j < coltask; j++)
+ 
+            for (int i = 0; i < (table.Length - rowtable * (coltask - 1) - (coltask-1)); i++)
             {
-                temp += table.Substring((i + rowtable * j), rowtask);
+                string temp = null;
+                for (int j = 0; j < coltask; j++)
+                {
+                    temp += table.Substring((i + rowtable * j), rowtask);
+                }
+                if (temp.Equals(task)) return true;
+
+
             }
-            if (temp.Equals(task)) return true;
 
-
-        }
+       
         return false;
             
 
