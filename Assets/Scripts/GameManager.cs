@@ -19,12 +19,13 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
+        cellSpawnManager.AddShip(1, 9);
         //создаем поле для задания
-        
+
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
         TaskManager.CreateTask(maxlevel, 7);
 
-        cellSpawnManager.GetComponent<CellChangePosition>().RefreshTask.AddListener(RefreshTask);
+        cellSpawnManager.GetComponent<CellChangePosition>().RefreshTask.AddListener(TakeMove);
         
     }
 
@@ -76,9 +77,13 @@ public class GameManager : MonoBehaviour
             
 
     }
-    public void RefreshTask()
+    public void TakeMove()
     {
         MovesCounter.CountMoves++;
+        if (MovesCounter._CountMoves%8 == 0)
+        {
+            cellSpawnManager.AddShip(1, 7);
+        }
         if (FindTask(cellSpawnManager, TaskManager))
         {
             Debug.Log("Задание выполнено");
