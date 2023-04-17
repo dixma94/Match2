@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
     }
     public void RefreshTask()
     {
+        MovesCounter.CountMoves++;
         if (FindTask(cellSpawnManager, TaskManager))
         {
             Debug.Log("Задание выполнено");
