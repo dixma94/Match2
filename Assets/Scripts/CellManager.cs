@@ -36,7 +36,7 @@ public class CellManager : MonoBehaviour
 
                 var shiftFromStart = GetShiftFromStart(col, row);
                 var newPosition = startPos + shiftFromStart;
-                var newCell = Instantiate<CellScript>(cellPrefab, newPosition, cellPrefab.transform.rotation);
+                var newCell = Instantiate<CellScript>(cellPrefab, new Vector3(newPosition.x,newPosition.y,2), cellPrefab.transform.rotation);
                 newCell.transform.name = col.ToString() + " " + row.ToString();
                 newCell.transform.parent = transform;
                 newCell.coordinates = newPosition;

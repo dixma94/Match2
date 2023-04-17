@@ -53,7 +53,7 @@ public  class CellChangePosition :MonoBehaviour
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
         if (secondCell == null || secondCell == firstCell)
         {
-            firstCell.ship.transform.position = new Vector3(firstCell.coordinates.x, firstCell.coordinates.y, -1);
+            firstCell.ship.transform.position = firstCell.coordinates;
             return;
         }
 
@@ -76,7 +76,7 @@ public  class CellChangePosition :MonoBehaviour
         //если уровни не совпадают возвращаем
         if (firstCell.Level != secondCell.Level)
         {
-            firstCell.ship.transform.position = new Vector3(firstCell.coordinates.x, firstCell.coordinates.y, -1);
+            firstCell.ship.transform.position = firstCell.coordinates;
             return;
         }
 
