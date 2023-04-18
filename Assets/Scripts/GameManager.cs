@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.AddShip(1, 9);
+        cellSpawnManager.AddObstacle(1, 1);
         //создаем поле для задания
 
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
         List<CellScript> array = new List<CellScript>();
 
         string task = null;
-        string table = null;
+
         int coltask = taskManager.columnsCount;
         int rowtask = taskManager.rowsCount;
         int rowtable = cellManager.rowsCount;
@@ -65,17 +65,17 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < (array.Count - rowtable * (coltask - 1) - (coltask - 1)); i++)
         {
-            List<CellScript> temp = new List<CellScript>();
+            CellScript[] temp = new CellScript[0];
             listObstacle.Clear();
-            table = null;
+            string table = null;
             for (int j = 0; j < coltask; j++)
             {
-              temp =  temp.Concat(array.Skip((i + rowtable * j)).Take(rowtask)).ToList();
-                
+              temp =  temp.Concat(array.Skip((i + rowtable * j)).Take(rowtask)).ToArray();
+            
             }
             foreach(var item in temp)
             {
-                if (item.Level ==9)
+                if (item.CellType == CellType.Obstacle)
                 {
                     listObstacle.Add(item);
                     table += "0";
@@ -108,7 +108,7 @@ public class GameManager : MonoBehaviour
         MovesCounter.CountMoves++;
         if (MovesCounter._CountMoves%8 == 0)
         {
-            cellSpawnManager.AddShip(1, 9);
+            cellSpawnManager.AddObstacle(1, 1);
         }
         if (FindTask(cellSpawnManager, TaskManager))
         {

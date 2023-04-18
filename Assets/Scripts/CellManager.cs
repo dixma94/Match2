@@ -11,8 +11,9 @@ public class CellManager : MonoBehaviour
     public CellScript cellPrefab;
     
     public CellScript[,] cellsArray;
-    public GameObject[] shipsArray;
 
+    public GameObject[] shipsArray;
+    public GameObject[] obstacleArray;
 
  
 
@@ -95,6 +96,16 @@ public class CellManager : MonoBehaviour
             cells.ElementAt(rnd).CreateShip(level, this);
         }
         
+    }
+    public void AddObstacle(int count, int level)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            var cells = cellsArray.Cast<CellScript>().Where(cell => cell.CellType == CellType.Empty);
+            var rnd = Random.Range(0, cells.Count());
+            cells.ElementAt(rnd).CreateObstacle(level, this);
+        }
+
     }
 
     public void CreateTask(int maxLevel, int shipsCount)

@@ -64,8 +64,10 @@ public  class CellChangePosition :MonoBehaviour
 
             _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].ship = firstCell.ship;
             _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].Level = firstCell.Level;
+            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].CellType = firstCell.CellType;
             _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].ship = null;
             _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].Level = 0;
+            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].CellType = CellType.Empty;
 
 
             RefreshTask.Invoke();
