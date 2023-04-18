@@ -31,10 +31,7 @@ public class InputHandler : MonoBehaviour
         {
             if( ShipDrag != null && cell!= null)
             {
-                if (cell.ship != null)
-                {
-                    ShipDrag.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
-                }
+               ShipDrag.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
             }
         }
         if (Input.GetMouseButtonUp(0)) 
@@ -44,6 +41,7 @@ public class InputHandler : MonoBehaviour
                 ShipDown.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
                 cell = null;
             }
+            
         }
 
     }

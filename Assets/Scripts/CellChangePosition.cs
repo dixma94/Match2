@@ -35,7 +35,10 @@ public  class CellChangePosition :MonoBehaviour
     private CellScript PickShip( Vector2 vector)
     {
         firstCell = _cellManager.FindCell(vector);
-        return firstCell;
+        if (firstCell != null) return firstCell.CellType != CellType.Ship ? null : firstCell;
+        return null;
+
+
     }
 
     private void DragShip(Vector3 vector)
