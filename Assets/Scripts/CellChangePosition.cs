@@ -50,7 +50,7 @@ public  class CellChangePosition :MonoBehaviour
     {
 
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
-        if (!_cellManager.FindCell(vector,out secondCell) || secondCell == firstCell)
+        if (!_cellManager.FindCell(vector,out secondCell) || secondCell == firstCell || firstCell.Level != secondCell.Level)
         {
             firstCell.item.transform.position = firstCell.coordinates;
             return;
@@ -74,12 +74,6 @@ public  class CellChangePosition :MonoBehaviour
 
         }
 
-        //если уровни не совпадают возвращаем
-        if (firstCell.Level != secondCell.Level)
-        {
-            firstCell.item.transform.position = firstCell.coordinates;
-            return;
-        }
 
         //разрущаем корабли и создаем новый
         Destroy(firstCell.item);

@@ -28,16 +28,18 @@ public class Cell : MonoBehaviour
 
     public void CreateItem(int level,CellManager cellManager, CellType type)
     {
-        Level = level;
+
         switch (type)
         {
             case CellType.Empty:
                 break;
             case CellType.Ship:
+                Level = level;
                 item = Instantiate(cellManager.shipsArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
                 break;
             case CellType.Obstacle:
                 item = Instantiate(cellManager.obstacleArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
+                Level = -1;
                 break;
             default:
                 break;
