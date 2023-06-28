@@ -21,10 +21,10 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.AddObstacle(15, 1);
-        cellSpawnManager.AddShip(5, 1);
-        cellSpawnManager.AddShip(3, 2);
-        cellSpawnManager.AddShip(1, 3);
+        cellSpawnManager.AddItem(15, 1,CellType.Obstacle);
+        cellSpawnManager.AddItem(5, 1,CellType.Ship);
+        cellSpawnManager.AddItem(3, 2, CellType.Ship);
+        cellSpawnManager.AddItem(1, 3, CellType.Ship);
         //создаем поле для задания
 
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     public void AddShip()
     {
 
-        cellSpawnManager.AddShip(1,1);
+        cellSpawnManager.AddItem(1,1, CellType.Ship);
 
     }
 
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
         }
         if (MovesCounter._CountMoves%8 == 0)
         {
-            cellSpawnManager.AddObstacle(1, 1);
+            cellSpawnManager.AddItem(1, 1, CellType.Obstacle);
         }
         if (FindTask(cellSpawnManager, TaskManager))
         {

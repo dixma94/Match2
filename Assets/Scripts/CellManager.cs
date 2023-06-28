@@ -88,7 +88,7 @@ public class CellManager : MonoBehaviour
 
     
 
-    public void AddShip(int count, int level)
+    public void AddItem(int count, int level)
     {
         for (int i = 0; i < count; i++)
         {
