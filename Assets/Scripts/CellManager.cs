@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class CellManager : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class CellManager : MonoBehaviour
     public GameObject[] shipsArray;
     public GameObject[] obstacleArray;
 
- 
+    public Action gameOver;
 
     public int columnsCount, rowsCount;
     public float cellMargin;
@@ -91,9 +92,13 @@ public class CellManager : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            var cells = cellsArray.Cast<CellScript>().Where(cell => !cell.IsHaveShip);
-            var rnd = Random.Range(0, cells.Count());
-            cells.ElementAt(rnd).CreateShip(level, this);
+            var cells = cellsArray.Cast<CellScript>().Where(cell=>cell.CellType == CellType.Empty);
+            if (cells.Count() == 0) { gameOver.Invoke(); }
+            else
+            {
+                var rnd = UnityEngine.Random.Range(0, cells.Count());
+                cells.ElementAt(rnd).CreateShip(level, this);
+            }
         }
         
     }
@@ -102,8 +107,12 @@ public class CellManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             var cells = cellsArray.Cast<CellScript>().Where(cell => cell.CellType == CellType.Empty);
-            var rnd = Random.Range(0, cells.Count());
-            cells.ElementAt(rnd).CreateObstacle(level, this);
+            var rnd = UnityEngine.Random.Range(0, cells.Count());
+            if (cells.Count() == 0) { gameOver.Invoke(); }
+            else
+            {
+                cells.ElementAt(rnd).CreateObstacle(level, this);
+            }
         }
 
     }
@@ -115,9 +124,9 @@ public class CellManager : MonoBehaviour
 
         for (int i = 0; i < shipsCount; i++)
         {
-            var cells = cellsArray.Cast<CellScript>().Where(cell => !cell.IsHaveShip);
-            var rndElement = Random.Range(0, cells.Count());
-            var rndLevel = Random.Range(1, maxLevel);
+            var cells = cellsArray.Cast<CellScript>().Where(cell => cell.CellType == CellType.Empty);
+            var rndElement = UnityEngine.Random.Range(0, cells.Count());
+            var rndLevel = UnityEngine.Random.Range(1, maxLevel);
             cells.ElementAt(rndElement).CreateShip(rndLevel,this);
         }
 

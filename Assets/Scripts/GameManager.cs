@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public CellManager cellSpawnManager;
     public CellManager TaskManager;
+    public GameObject Canvas;
     
 
     private int maxlevel=3;
@@ -20,24 +21,31 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.AddObstacle(1, 1);
+        cellSpawnManager.AddObstacle(15, 1);
+        cellSpawnManager.AddShip(5, 1);
+        cellSpawnManager.AddShip(3, 2);
+        cellSpawnManager.AddShip(1, 3);
         //создаем поле для задания
 
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
         TaskManager.CreateTask(maxlevel, 5);
 
         cellSpawnManager.GetComponent<CellChangePosition>().RefreshTask.AddListener(TakeMove);
-        
+        cellSpawnManager.gameOver += GameOver;
     }
 
     public void AddShip()
     {
 
         cellSpawnManager.AddShip(1,1);
+
     }
 
    
-
+    public void GameOver()
+    {
+        Canvas.SetActive(true);
+    }
 
 
     public bool FindTask(CellManager cellManager, CellManager taskManager)
@@ -106,17 +114,20 @@ public class GameManager : MonoBehaviour
     public void TakeMove()
     {
         MovesCounter.CountMoves++;
+        if (MovesCounter.CountMoves%20 == 0 && maxlevel < cellSpawnManager.shipsArray.Length)
+        {
+            maxlevel++;
+        }
         if (MovesCounter._CountMoves%8 == 0)
         {
             cellSpawnManager.AddObstacle(1, 1);
         }
         if (FindTask(cellSpawnManager, TaskManager))
         {
-            Debug.Log("Задание выполнено");
+            
             TaskManager.DiscardTable();
             TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
-            maxlevel++;
-            TaskManager.CreateTask(maxlevel, 7);
+            TaskManager.CreateTask(maxlevel, 5);
         }
     }
 }
