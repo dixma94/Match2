@@ -70,7 +70,7 @@ public class CellManager : MonoBehaviour
         return FindStartPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
     }
 
-    public CellScript FindCell(Vector2 point)
+    public bool FindCell(Vector2 point,out CellScript cellOut)
     {
         foreach (var cell in cellsArray)
         {
@@ -80,10 +80,12 @@ public class CellManager : MonoBehaviour
 
             if (xStatement && yStatement)
             {
-                return cell;
+                cellOut = cell;
+                return true;
             }
         }
-        return null;
+        cellOut = null;
+        return false;
     }
 
     

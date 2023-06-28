@@ -21,40 +21,36 @@ public  class CellChangePosition :MonoBehaviour
     }
     private void OnEnable()
     {
-        _inputHandler.ShipUp += PickShip;
+        _inputHandler.ShipUp += PickUpShip;
         _inputHandler.ShipDrag += DragShip;
-        _inputHandler.ShipDown += DownShip;
+        _inputHandler.ShipDown += PickDownShip;
     }
 
     private void OnDisable()
     {
-        _inputHandler.ShipUp -= PickShip;
+        _inputHandler.ShipUp -= PickUpShip;
         _inputHandler.ShipDrag -= DragShip;
-        _inputHandler.ShipDown -= DownShip;
+        _inputHandler.ShipDown -= PickDownShip;
     }
-    private CellScript PickShip( Vector2 vector)
+    private void PickUpShip( Vector2 vector)
     {
-        firstCell = _cellManager.FindCell(vector);
-        if (firstCell != null) return firstCell.CellType != CellType.Ship ? null : firstCell;
-        return null;
-
+        if (_cellManager.FindCell(vector, out firstCell))
+        {
+             firstCell= firstCell.CellType != CellType.Ship ? null : firstCell;
+        }
 
     }
 
     private void DragShip(Vector3 vector)
     {
-        Vector3 vector3 = vector;
-        vector3.z = -1;
-        firstCell.item.transform.position = vector3;
+        firstCell.item.transform.position = new Vector3(vector.x, vector.y, -1);
     }
 
-    private void DownShip(Vector2 vector)
+    private void PickDownShip(Vector2 vector)
     {
- 
-            secondCell = _cellManager.FindCell(vector);
 
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
-        if (secondCell == null || secondCell == firstCell)
+        if (!_cellManager.FindCell(vector,out secondCell) || secondCell == firstCell)
         {
             firstCell.item.transform.position = firstCell.coordinates;
             return;
@@ -73,7 +69,7 @@ public  class CellChangePosition :MonoBehaviour
             _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].CellType = CellType.Empty;
 
 
-            RefreshTask.Invoke();
+            RefreshTask?.Invoke();
             return;
 
         }
@@ -94,7 +90,7 @@ public  class CellChangePosition :MonoBehaviour
         firstCell.Level = 0;
 
 
-        RefreshTask.Invoke();
+        RefreshTask?.Invoke();
     }
 
 }
