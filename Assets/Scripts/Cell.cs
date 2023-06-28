@@ -8,14 +8,12 @@ public enum CellType
     Ship,
     Obstacle
 }
-public class CellScript : MonoBehaviour
+public class Cell : MonoBehaviour
 {
     public Vector2 coordinates;
     public GameObject item;
-    public int Level;
     public CellType CellType = CellType.Empty;
-
-    
+    public int Level;
 
     public bool IsHaveShip
     {

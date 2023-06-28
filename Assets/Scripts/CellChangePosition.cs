@@ -11,8 +11,8 @@ public  class CellChangePosition :MonoBehaviour
 
     public UnityEvent RefreshTask;
 
-    CellScript firstCell;
-    CellScript secondCell;
+    Cell firstCell;
+    Cell secondCell;
     private void Awake()
     {
       _cellManager = GetComponent<CellManager>();

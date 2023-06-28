@@ -9,9 +9,9 @@ using System;
 
 public class CellManager : MonoBehaviour
 {
-    public CellScript cellPrefab;
+    public Cell cellPrefab;
     
-    public CellScript[,] cellsArray;
+    public Cell[,] cellsArray;
 
     public GameObject[] shipsArray;
     public GameObject[] obstacleArray;
@@ -29,7 +29,7 @@ public class CellManager : MonoBehaviour
     public void CreateTable(int columnsCount, int rowsCount)
     {
         
-        cellsArray = new CellScript[columnsCount, rowsCount];
+        cellsArray = new Cell[columnsCount, rowsCount];
         Vector2 startPos = FindStartPosition(columnsCount, rowsCount);
         for (int col = 0; col < columnsCount; col++)
         {
@@ -38,7 +38,7 @@ public class CellManager : MonoBehaviour
 
                 var shiftFromStart = GetShiftFromStart(col, row);
                 var newPosition = startPos + shiftFromStart;
-                var newCell = Instantiate<CellScript>(cellPrefab, new Vector3(newPosition.x,newPosition.y,2), cellPrefab.transform.rotation);
+                var newCell = Instantiate<Cell>(cellPrefab, new Vector3(newPosition.x,newPosition.y,2), cellPrefab.transform.rotation);
                 newCell.transform.name = col.ToString() + " " + row.ToString();
                 newCell.transform.parent = transform;
                 newCell.coordinates = newPosition;
@@ -70,7 +70,7 @@ public class CellManager : MonoBehaviour
         return FindStartPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
     }
 
-    public bool FindCell(Vector2 point,out CellScript cellOut)
+    public bool FindCell(Vector2 point,out Cell cellOut)
     {
         foreach (var cell in cellsArray)
         {
@@ -94,7 +94,7 @@ public class CellManager : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            var cells = cellsArray.Cast<CellScript>().Where(cell=>cell.CellType == CellType.Empty);
+            var cells = cellsArray.Cast<Cell>().Where(cell=>cell.CellType == CellType.Empty);
             if (cells.Count() == 0) { gameOver.Invoke(); }
             else
             {
@@ -113,7 +113,7 @@ public class CellManager : MonoBehaviour
 
         for (int i = 0; i < shipsCount; i++)
         {
-            var cells = cellsArray.Cast<CellScript>().Where(cell => cell.CellType == CellType.Empty);
+            var cells = cellsArray.Cast<Cell>().Where(cell => cell.CellType == CellType.Empty);
             var rndElement = UnityEngine.Random.Range(0, cells.Count());
             var rndLevel = UnityEngine.Random.Range(1, maxLevel);
             cells.ElementAt(rndElement).CreateItem(rndLevel,this,CellType.Ship);

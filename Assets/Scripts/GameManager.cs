@@ -51,8 +51,8 @@ public class GameManager : MonoBehaviour
     public bool FindTask(CellManager cellManager, CellManager taskManager)
     {
         if (taskManager == null) return false;
-        List<CellScript> listObstacle = new List<CellScript>();
-        List<CellScript> array = new List<CellScript>();
+        List<Cell> listObstacle = new List<Cell>();
+        List<Cell> array = new List<Cell>();
 
         string task = null;
 
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < (array.Count - rowtable * (coltask - 1) - (coltask - 1)); i++)
         {
-            CellScript[] temp = new CellScript[0];
+            Cell[] temp = new Cell[0];
             listObstacle.Clear();
             string table = null;
             for (int j = 0; j < coltask; j++)
