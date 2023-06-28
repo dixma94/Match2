@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public CellManager cellSpawnManager;
     public CellManager TaskManager;
+    public CellManager ItemsManager;
     public GameObject Canvas;
     
 
@@ -21,25 +22,22 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.AddItem(15, 1,CellType.Obstacle);
-        cellSpawnManager.AddItem(5, 1,CellType.Ship);
-        cellSpawnManager.AddItem(3, 2, CellType.Ship);
-        cellSpawnManager.AddItem(1, 3, CellType.Ship);
+        cellSpawnManager.AddItemRandomPlace(15, 1,CellType.Obstacle);
+        cellSpawnManager.AddItemRandomPlace(5, 1,CellType.Ship);
+        cellSpawnManager.AddItemRandomPlace(3, 2, CellType.Ship);
+        cellSpawnManager.AddItemRandomPlace(1, 3, CellType.Ship);
         //создаем поле для задания
 
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
         TaskManager.CreateTask(maxlevel, 5);
 
-        cellSpawnManager.GetComponent<CellChangePosition>().RefreshTask.AddListener(TakeMove);
+        ItemsManager.CreateTable(ItemsManager.columnsCount, ItemsManager.rowsCount);
+        ItemsManager.AddItemRandomPlace(1, 1, CellType.Ship);
+
+        cellSpawnManager.GetComponent<CellChangePosition>().TakeMove.AddListener(TakeMove);
         cellSpawnManager.gameOver += GameOver;
     }
 
-    public void AddShip()
-    {
-
-        cellSpawnManager.AddItem(1,1, CellType.Ship);
-
-    }
 
    
     public void GameOver()
@@ -120,7 +118,7 @@ public class GameManager : MonoBehaviour
         }
         if (MovesCounter._CountMoves%8 == 0)
         {
-            cellSpawnManager.AddItem(1, 1, CellType.Obstacle);
+            cellSpawnManager.AddItemRandomPlace(1, 1, CellType.Obstacle);
         }
         if (FindTask(cellSpawnManager, TaskManager))
         {

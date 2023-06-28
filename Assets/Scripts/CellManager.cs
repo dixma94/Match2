@@ -90,7 +90,7 @@ public class CellManager : MonoBehaviour
 
     
 
-    public void AddItem(int count, int level,CellType type)
+    public void AddItemRandomPlace(int count, int level,CellType type)
     {
         for (int i = 0; i < count; i++)
         {
@@ -104,6 +104,14 @@ public class CellManager : MonoBehaviour
         }
         
     }
+    //public bool AddItem(int level,CellType cellType)
+    //{
+    //    var cells = cellsArray.Cast<Cell>().Where(cell => cell.CellType == CellType.Empty);
+    //    if (cells.Count() != 0)
+    //    {
+
+    //    }
+    //}
     
 
     public void CreateTask(int maxLevel, int shipsCount)

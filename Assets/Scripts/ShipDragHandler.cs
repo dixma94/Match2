@@ -1,12 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public  class CellChangePosition :MonoBehaviour
+public class ShipDragHandler : MonoBehaviour
 {
     private CellManager _cellManager;
+    public CellManager destinationCellManager;
     private InputHandler _inputHandler;
 
     public UnityEvent TakeMove;
@@ -15,8 +15,8 @@ public  class CellChangePosition :MonoBehaviour
     Cell secondCell;
     private void Awake()
     {
-      _cellManager = GetComponent<CellManager>();
-      _inputHandler = GetComponent<InputHandler>();
+        _cellManager = GetComponent<CellManager>();
+        _inputHandler = GetComponent<InputHandler>();
 
     }
     private void OnEnable()
@@ -32,11 +32,11 @@ public  class CellChangePosition :MonoBehaviour
         _inputHandler.ShipDrag -= DragShip;
         _inputHandler.ShipDown -= PickDownShip;
     }
-    private void PickUpShip( Vector2 vector)
+    private void PickUpShip(Vector2 vector)
     {
         if (_cellManager.FindCell(vector, out firstCell))
         {
-             firstCell= firstCell.CellType != CellType.Ship ? null : firstCell;
+            firstCell = firstCell.CellType != CellType.Ship ? null : firstCell;
         }
 
     }
@@ -50,7 +50,7 @@ public  class CellChangePosition :MonoBehaviour
     {
 
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
-        if (!_cellManager.FindCell(vector,out secondCell) || secondCell == firstCell)
+        if (!destinationCellManager.FindCell(vector, out secondCell) || secondCell == firstCell)
         {
             firstCell.item.transform.position = firstCell.coordinates;
             return;
@@ -61,13 +61,11 @@ public  class CellChangePosition :MonoBehaviour
         {
             firstCell.item.transform.position = secondCell.coordinates;
 
-            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].item = firstCell.item;
-            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].Level = firstCell.Level;
-            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].CellType = firstCell.CellType;
-            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].item = null;
-            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].Level = 0;
-            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].CellType = CellType.Empty;
-
+            destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].item = firstCell.item;
+            destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].Level = firstCell.Level;
+            destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].CellType = firstCell.CellType;
+            firstCell.item = Instantiate(_cellManager.shipsArray[firstCell.Level - 1], new Vector3(firstCell.coordinates.x, firstCell.coordinates.y, -0.5f), gameObject.transform.rotation);
+            firstCell.item.transform.parent = this.transform;
 
             TakeMove?.Invoke();
             return;
@@ -78,18 +76,15 @@ public  class CellChangePosition :MonoBehaviour
             firstCell.item.transform.position = firstCell.coordinates;
             return;
         }
-        
+
 
         //разрущаем корабли и создаем новый
-        Destroy(firstCell.item);
-        Destroy(secondCell.item);
-        firstCell.item = null;
-        firstCell.CellType = CellType.Empty;
-        secondCell.CreateItem(firstCell.Level + 1, _cellManager, CellType.Ship);
-        firstCell.Level = 0;
 
+        Destroy(secondCell.item);
+        secondCell.CreateItem(firstCell.Level + 1, destinationCellManager, CellType.Ship);
+        firstCell.item.transform.position = firstCell.coordinates;
+       
 
         TakeMove?.Invoke();
     }
-
 }
