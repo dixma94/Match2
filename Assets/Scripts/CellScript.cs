@@ -11,7 +11,7 @@ public enum CellType
 public class CellScript : MonoBehaviour
 {
     public Vector2 coordinates;
-    public GameObject ship;
+    public GameObject item;
     public int Level;
     public CellType CellType = CellType.Empty;
 
@@ -21,26 +21,33 @@ public class CellScript : MonoBehaviour
     {
         get 
         {
-           return ship != null ? true: false;
+           return item != null ? true: false;
         }
        
     }
     public int ArrayColIndex { get; set; }
     public int ArrayRowIndex { get; set; }
 
-    public void CreateShip(int level,CellManager cellManager)
+    public void CreateItem(int level,CellManager cellManager, CellType type)
     {
         Level = level;
-        ship = Instantiate(cellManager.shipsArray[level-1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
-        ship.transform.parent = this.transform;
-        CellType = CellType.Ship;
+        switch (type)
+        {
+            case CellType.Empty:
+                break;
+            case CellType.Ship:
+                item = Instantiate(cellManager.shipsArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
+                break;
+            case CellType.Obstacle:
+                item = Instantiate(cellManager.obstacleArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
+                break;
+            default:
+                break;
+        }
+        
+        item.transform.parent = this.transform;
+        CellType = type;
     }
 
-    public void CreateObstacle(int level,CellManager cellManager)
-    {
-        Level = 0;
-        ship = Instantiate(cellManager.obstacleArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
-        ship.transform.parent = this.transform;
-        CellType = CellType.Obstacle;
-    }
+    
 }

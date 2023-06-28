@@ -97,8 +97,8 @@ public class GameManager : MonoBehaviour
             {
                 foreach (var item in listObstacle)
                 {
-                    Destroy(item.ship);
-                    item.ship = null;
+                    Destroy(item.item);
+                    item.item = null;
                     item.Level = 0;
                 }
                 return true;

@@ -45,7 +45,7 @@ public  class CellChangePosition :MonoBehaviour
     {
         Vector3 vector3 = vector;
         vector3.z = -1;
-        firstCell.ship.transform.position = vector3;
+        firstCell.item.transform.position = vector3;
     }
 
     private void DownShip(Vector2 vector)
@@ -56,19 +56,19 @@ public  class CellChangePosition :MonoBehaviour
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
         if (secondCell == null || secondCell == firstCell)
         {
-            firstCell.ship.transform.position = firstCell.coordinates;
+            firstCell.item.transform.position = firstCell.coordinates;
             return;
         }
 
         //если перетянули на пустую, перемещаем корабль
         if (!secondCell.IsHaveShip)
         {
-            firstCell.ship.transform.position = secondCell.coordinates;
+            firstCell.item.transform.position = secondCell.coordinates;
 
-            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].ship = firstCell.ship;
+            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].item = firstCell.item;
             _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].Level = firstCell.Level;
             _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].CellType = firstCell.CellType;
-            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].ship = null;
+            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].item = null;
             _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].Level = 0;
             _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].CellType = CellType.Empty;
 
@@ -81,16 +81,16 @@ public  class CellChangePosition :MonoBehaviour
         //если уровни не совпадают возвращаем
         if (firstCell.Level != secondCell.Level)
         {
-            firstCell.ship.transform.position = firstCell.coordinates;
+            firstCell.item.transform.position = firstCell.coordinates;
             return;
         }
 
         //разрущаем корабли и создаем новый
-        Destroy(firstCell.ship);
-        Destroy(secondCell.ship);
-        firstCell.ship = null;
+        Destroy(firstCell.item);
+        Destroy(secondCell.item);
+        firstCell.item = null;
 
-        secondCell.CreateShip(firstCell.Level + 1, _cellManager);
+        secondCell.CreateItem(firstCell.Level + 1, _cellManager, CellType.Ship);
         firstCell.Level = 0;
 
 

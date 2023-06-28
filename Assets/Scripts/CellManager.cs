@@ -97,7 +97,7 @@ public class CellManager : MonoBehaviour
             else
             {
                 var rnd = UnityEngine.Random.Range(0, cells.Count());
-                cells.ElementAt(rnd).CreateShip(level, this);
+                cells.ElementAt(rnd).CreateItem(level, this, CellType.Ship);
             }
         }
         
@@ -111,7 +111,7 @@ public class CellManager : MonoBehaviour
             if (cells.Count() == 0) { gameOver.Invoke(); }
             else
             {
-                cells.ElementAt(rnd).CreateObstacle(level, this);
+                cells.ElementAt(rnd).CreateItem(level, this, CellType.Obstacle);
             }
         }
 
@@ -127,7 +127,7 @@ public class CellManager : MonoBehaviour
             var cells = cellsArray.Cast<CellScript>().Where(cell => cell.CellType == CellType.Empty);
             var rndElement = UnityEngine.Random.Range(0, cells.Count());
             var rndLevel = UnityEngine.Random.Range(1, maxLevel);
-            cells.ElementAt(rndElement).CreateShip(rndLevel,this);
+            cells.ElementAt(rndElement).CreateItem(rndLevel,this,CellType.Ship);
         }
 
     }
