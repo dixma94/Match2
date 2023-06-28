@@ -88,7 +88,7 @@ public class CellManager : MonoBehaviour
 
     
 
-    public void AddItem(int count, int level)
+    public void AddItem(int count, int level,CellType type)
     {
         for (int i = 0; i < count; i++)
         {
@@ -97,25 +97,12 @@ public class CellManager : MonoBehaviour
             else
             {
                 var rnd = UnityEngine.Random.Range(0, cells.Count());
-                cells.ElementAt(rnd).CreateItem(level, this, CellType.Ship);
+                cells.ElementAt(rnd).CreateItem(level, this, type);
             }
         }
         
     }
-    public void AddObstacle(int count, int level)
-    {
-        for (int i = 0; i < count; i++)
-        {
-            var cells = cellsArray.Cast<CellScript>().Where(cell => cell.CellType == CellType.Empty);
-            var rnd = UnityEngine.Random.Range(0, cells.Count());
-            if (cells.Count() == 0) { gameOver.Invoke(); }
-            else
-            {
-                cells.ElementAt(rnd).CreateItem(level, this, CellType.Obstacle);
-            }
-        }
-
-    }
+    
 
     public void CreateTask(int maxLevel, int shipsCount)
     {
