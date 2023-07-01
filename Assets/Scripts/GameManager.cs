@@ -11,7 +11,9 @@ public class GameManager : MonoBehaviour
     public CellManager cellSpawnManager;
     public CellManager TaskManager;
     public CellManager ItemsManager;
+    public CellManager InventoryManager;
     public GameObject Canvas;
+    public int point;
     
 
     private int maxlevel=3;
@@ -33,6 +35,9 @@ public class GameManager : MonoBehaviour
 
         ItemsManager.CreateTable(ItemsManager.columnsCount, ItemsManager.rowsCount);
         ItemsManager.AddItemRandomPlace(1, 1, CellType.Ship);
+
+        InventoryManager.CreateTable(InventoryManager.columnsCount, InventoryManager.rowsCount);
+        InventoryManager.AddItemRandomPlace(1, 1, CellType.Rocket);
 
         cellSpawnManager.GetComponent<CellChangePosition>().TakeMove.AddListener(TakeMove);
         cellSpawnManager.gameOver += GameOver;
@@ -93,12 +98,12 @@ public class GameManager : MonoBehaviour
             }
             if (task.Equals(table))
             {
-                foreach (var item in listObstacle)
-                {
-                    Destroy(item.item);
-                    item.item = null;
-                    item.Level = 0;
-                }
+                //foreach (var item in listObstacle)
+                //{
+                //    Destroy(item.item);
+                //    item.item = null;
+                //    item.Level = 0;
+                //}
                 return true;
             }
         }
@@ -122,10 +127,15 @@ public class GameManager : MonoBehaviour
         }
         if (FindTask(cellSpawnManager, TaskManager))
         {
-            
-            TaskManager.DiscardTable();
-            TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
-            TaskManager.CreateTask(maxlevel, 5);
+            point += 5;
+            RefreshTask();
         }
+    }
+
+    public void RefreshTask()
+    {
+        TaskManager.DiscardTable();
+        TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
+        TaskManager.CreateTask(maxlevel, 5);
     }
 }

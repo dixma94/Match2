@@ -6,7 +6,8 @@ public enum CellType
 {
     Empty,
     Ship,
-    Obstacle
+    Obstacle,
+    Rocket
 }
 public class Cell : MonoBehaviour
 {
@@ -34,6 +35,7 @@ public class Cell : MonoBehaviour
             case CellType.Empty:
                 break;
             case CellType.Ship:
+            case CellType.Rocket:
                 Level = level;
                 item = Instantiate(cellManager.shipsArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
                 break;
@@ -41,6 +43,7 @@ public class Cell : MonoBehaviour
                 item = Instantiate(cellManager.obstacleArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
                 Level = -1;
                 break;
+
             default:
                 break;
         }

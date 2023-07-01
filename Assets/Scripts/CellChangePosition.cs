@@ -43,11 +43,16 @@ public  class CellChangePosition :MonoBehaviour
 
     private void DragShip(Vector3 vector)
     {
+        if (firstCell != null)
+        {
+
         firstCell.item.transform.position = new Vector3(vector.x, vector.y, -1);
+        }
     }
 
     private void PickDownShip(Vector2 vector)
     {
+        if (firstCell == null) return;
 
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
         if (!_cellManager.FindCell(vector,out secondCell) || secondCell == firstCell)
