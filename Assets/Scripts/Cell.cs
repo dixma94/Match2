@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CellType
+public enum ItemType
 {
     Empty,
     Ship,
@@ -13,7 +13,7 @@ public class Cell : MonoBehaviour
 {
     public Vector2 coordinates;
     public GameObject item;
-    public CellType CellType = CellType.Empty;
+    public ItemType ItemType = ItemType.Empty;
     public int Level;
 
     public bool IsHaveShip
@@ -27,19 +27,19 @@ public class Cell : MonoBehaviour
     public int ArrayColIndex { get; set; }
     public int ArrayRowIndex { get; set; }
 
-    public void CreateItem(int level,CellManager cellManager, CellType type)
+    public void CreateItem(int level,CellManager cellManager, ItemType type)
     {
 
         switch (type)
         {
-            case CellType.Empty:
+            case ItemType.Empty:
                 break;
-            case CellType.Ship:
-            case CellType.Rocket:
+            case ItemType.Ship:
+            case ItemType.Rocket:
                 Level = level;
                 item = Instantiate(cellManager.shipsArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
                 break;
-            case CellType.Obstacle:
+            case ItemType.Obstacle:
                 item = Instantiate(cellManager.obstacleArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
                 Level = -1;
                 break;
@@ -49,8 +49,8 @@ public class Cell : MonoBehaviour
         }
         
         item.transform.parent = this.transform;
-        CellType = type;
+        ItemType = type;
     }
 
-    
+
 }

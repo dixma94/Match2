@@ -8,10 +8,10 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
 
-    public CellManager cellSpawnManager;
-    public CellManager TaskManager;
-    public CellManager ItemsManager;
-    public CellManager InventoryManager;
+    public TableCellManager cellSpawnManager;
+    public TaskCellManager TaskManager;
+    public ItemsCellManager ItemsManager;
+    public InventoryCellManager InventoryManager;
     public GameObject Canvas;
     public int point;
     
@@ -24,22 +24,23 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.AddItemRandomPlace(15, 1,CellType.Obstacle);
-        cellSpawnManager.AddItemRandomPlace(5, 1,CellType.Ship);
-        cellSpawnManager.AddItemRandomPlace(3, 2, CellType.Ship);
-        cellSpawnManager.AddItemRandomPlace(1, 3, CellType.Ship);
+        cellSpawnManager.AddItemRandomPlace(15, 1,ItemType.Obstacle);
+        cellSpawnManager.AddItemRandomPlace(5, 1,ItemType.Ship);
+        cellSpawnManager.AddItemRandomPlace(3, 2, ItemType.Ship);
+        cellSpawnManager.AddItemRandomPlace(1, 3, ItemType.Ship);
         //создаем поле для задания
 
         TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
         TaskManager.CreateTask(maxlevel, 5);
 
         ItemsManager.CreateTable(ItemsManager.columnsCount, ItemsManager.rowsCount);
-        ItemsManager.AddItemRandomPlace(1, 1, CellType.Ship);
+        ItemsManager.AddItemRandomPlace(1, 1, ItemType.Ship);
+        ItemsManager.GetComponent<NewShipDragHandler>().TakeMove.AddListener(TakeMove);
 
         InventoryManager.CreateTable(InventoryManager.columnsCount, InventoryManager.rowsCount);
-        InventoryManager.AddItemRandomPlace(1, 1, CellType.Rocket);
+        InventoryManager.AddItemRandomPlace(1, 1, ItemType.Rocket);
 
-        cellSpawnManager.GetComponent<CellChangePosition>().TakeMove.AddListener(TakeMove);
+        cellSpawnManager.GetComponent<ShipDragHandler>().TakeMove.AddListener(TakeMove);
         cellSpawnManager.gameOver += GameOver;
     }
 
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public bool FindTask(CellManager cellManager, CellManager taskManager)
+    public bool FindTask(TableCellManager cellManager, TaskCellManager taskManager)
     {
         if (taskManager == null) return false;
         List<Cell> listObstacle = new List<Cell>();
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
             }
             foreach(var item in temp)
             {
-                if (item.CellType == CellType.Obstacle)
+                if (item.ItemType == ItemType.Obstacle)
                 {
                     listObstacle.Add(item);
                     table += "0";
@@ -123,7 +124,7 @@ public class GameManager : MonoBehaviour
         }
         if (MovesCounter._CountMoves%8 == 0)
         {
-            cellSpawnManager.AddItemRandomPlace(1, 1, CellType.Obstacle);
+            cellSpawnManager.AddItemRandomPlace(1, 1, ItemType.Obstacle);
         }
         if (FindTask(cellSpawnManager, TaskManager))
         {

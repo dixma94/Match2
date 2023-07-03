@@ -1,16 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
-using System;
 
 public class CellManager : MonoBehaviour
 {
     public Cell cellPrefab;
-    
+
     public Cell[,] cellsArray;
 
     public GameObject[] shipsArray;
@@ -22,13 +19,13 @@ public class CellManager : MonoBehaviour
     public float cellMargin;
 
     public float cellSize = 1;
-   
-    
-  
-    
+
+
+
+
     public void CreateTable(int columnsCount, int rowsCount)
     {
-        
+        DiscardTable();
         cellsArray = new Cell[columnsCount, rowsCount];
         Vector2 startPos = FindStartPosition(columnsCount, rowsCount);
         for (int col = 0; col < columnsCount; col++)
@@ -38,7 +35,7 @@ public class CellManager : MonoBehaviour
 
                 var shiftFromStart = GetShiftFromStart(col, row);
                 var newPosition = startPos + shiftFromStart;
-                var newCell = Instantiate<Cell>(cellPrefab, new Vector3(newPosition.x,newPosition.y,2), cellPrefab.transform.rotation);
+                var newCell = Instantiate<Cell>(cellPrefab, new Vector3(newPosition.x, newPosition.y, 2), cellPrefab.transform.rotation);
                 newCell.transform.name = col.ToString() + " " + row.ToString();
                 newCell.transform.parent = transform;
                 newCell.coordinates = newPosition;
@@ -60,7 +57,7 @@ public class CellManager : MonoBehaviour
 
     public Vector2 FindStartPosition(float columnsCount, float rowsCount)
     {
-        float startPosX =-(columnsCount * cellSize + (columnsCount-1)*cellMargin)/2.0f + cellSize/2;
+        float startPosX = -(columnsCount * cellSize + (columnsCount - 1) * cellMargin) / 2.0f + cellSize / 2;
         float startPosY = (rowsCount * cellSize + (rowsCount - 1) * cellMargin) / 2.0f - cellSize / 2;
         return new Vector2(startPosX + transform.position.x, startPosY + transform.position.y);
     }
@@ -70,11 +67,11 @@ public class CellManager : MonoBehaviour
         return FindStartPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
     }
 
-    public bool FindCell(Vector2 point,out Cell cellOut)
+    public bool FindCell(Vector2 point, out Cell cellOut)
     {
         foreach (var cell in cellsArray)
         {
-            var halfCellZize = cellSize/2 + cellMargin;
+            var halfCellZize = cellSize / 2 + cellMargin;
             bool xStatement = cell.coordinates.x - halfCellZize <= point.x && point.x <= cell.coordinates.x + halfCellZize;
             bool yStatement = cell.coordinates.y - halfCellZize <= point.y && point.y <= cell.coordinates.y + halfCellZize;
 
@@ -88,13 +85,13 @@ public class CellManager : MonoBehaviour
         return false;
     }
 
-    
 
-    public void AddItemRandomPlace(int count, int level,CellType type)
+
+    public void AddItemRandomPlace(int count, int level, ItemType type)
     {
         for (int i = 0; i < count; i++)
         {
-            var cells = cellsArray.Cast<Cell>().Where(cell=>cell.CellType == CellType.Empty);
+            var cells = cellsArray.Cast<Cell>().Where(cell => cell.ItemType == ItemType.Empty);
             if (cells.Count() == 0) { gameOver.Invoke(); }
             else
             {
@@ -102,47 +99,22 @@ public class CellManager : MonoBehaviour
                 cells.ElementAt(rnd).CreateItem(level, this, type);
             }
         }
-        
-    }
-    //public bool AddItem(int level,CellType cellType)
-    //{
-    //    var cells = cellsArray.Cast<Cell>().Where(cell => cell.CellType == CellType.Empty);
-    //    if (cells.Count() != 0)
-    //    {
-
-    //    }
-    //}
-    
-
-    public void CreateTask(int maxLevel, int shipsCount)
-    {
-        if (shipsCount > cellsArray.Length || maxLevel>shipsArray.Length) return;
-
-
-        for (int i = 0; i < shipsCount; i++)
-        {
-            var cells = cellsArray.Cast<Cell>().Where(cell => cell.CellType == CellType.Empty);
-            var rndElement = UnityEngine.Random.Range(0, cells.Count());
-            var rndLevel = UnityEngine.Random.Range(1, maxLevel);
-            cells.ElementAt(rndElement).CreateItem(rndLevel,this,CellType.Ship);
-        }
 
     }
+   
 
     public void DiscardTable()
     {
-        if (cellsArray!=null)
+        if (cellsArray != null)
         {
             foreach (var item in cellsArray)
             {
                 Destroy(item.gameObject);
             }
         }
-       
+
     }
-   
 
 
-   
 
 }

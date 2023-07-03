@@ -4,44 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public  class CellChangePosition :MonoBehaviour
+public  class ShipDragHandler : DragHandler
 {
-    private CellManager _cellManager;
-    private InputHandler _inputHandler;
 
-    public UnityEvent TakeMove;
-
-    Cell firstCell;
-    Cell secondCell;
-    private void Awake()
-    {
-      _cellManager = GetComponent<CellManager>();
-      _inputHandler = GetComponent<InputHandler>();
-
-    }
-    private void OnEnable()
-    {
-        _inputHandler.ShipUp += PickUpShip;
-        _inputHandler.ShipDrag += DragShip;
-        _inputHandler.ShipDown += PickDownShip;
-    }
-
-    private void OnDisable()
-    {
-        _inputHandler.ShipUp -= PickUpShip;
-        _inputHandler.ShipDrag -= DragShip;
-        _inputHandler.ShipDown -= PickDownShip;
-    }
-    private void PickUpShip( Vector2 vector)
+    protected override void PickUpShip( Vector2 vector)
     {
         if (_cellManager.FindCell(vector, out firstCell))
         {
-             firstCell= firstCell.CellType != CellType.Ship ? null : firstCell;
+             firstCell= firstCell.ItemType != ItemType.Ship ? null : firstCell;
         }
 
     }
 
-    private void DragShip(Vector3 vector)
+    protected override void DragShip(Vector3 vector)
     {
         if (firstCell != null)
         {
@@ -50,7 +25,7 @@ public  class CellChangePosition :MonoBehaviour
         }
     }
 
-    private void PickDownShip(Vector2 vector)
+    protected override void PickDownShip(Vector2 vector)
     {
         if (firstCell == null) return;
 
@@ -68,10 +43,10 @@ public  class CellChangePosition :MonoBehaviour
 
             _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].item = firstCell.item;
             _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].Level = firstCell.Level;
-            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].CellType = firstCell.CellType;
+            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].ItemType = firstCell.ItemType;
             _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].item = null;
             _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].Level = 0;
-            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].CellType = CellType.Empty;
+            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].ItemType = ItemType.Empty;
 
 
             TakeMove?.Invoke();
@@ -89,8 +64,8 @@ public  class CellChangePosition :MonoBehaviour
         Destroy(firstCell.item);
         Destroy(secondCell.item);
         firstCell.item = null;
-        firstCell.CellType = CellType.Empty;
-        secondCell.CreateItem(firstCell.Level + 1, _cellManager, CellType.Ship);
+        firstCell.ItemType = ItemType.Empty;
+        secondCell.CreateItem(firstCell.Level + 1, _cellManager, ItemType.Ship);
         firstCell.Level = 0;
 
 

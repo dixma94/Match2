@@ -3,45 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class ShipDragHandler : MonoBehaviour
+public class NewShipDragHandler : DragHandler
 {
-    private CellManager _cellManager;
-    public CellManager destinationCellManager;
-    private InputHandler _inputHandler;
+    [SerializeField]
+    private TableCellManager destinationCellManager;
 
-    public UnityEvent TakeMove;
-
-    Cell firstCell;
-    Cell secondCell;
-    private void Awake()
-    {
-        _cellManager = GetComponent<CellManager>();
-        _inputHandler = GetComponent<InputHandler>();
-
-    }
-    private void OnEnable()
-    {
-        _inputHandler.ShipUp += PickUpShip;
-        _inputHandler.ShipDrag += DragShip;
-        _inputHandler.ShipDown += PickDownShip;
-    }
-
-    private void OnDisable()
-    {
-        _inputHandler.ShipUp -= PickUpShip;
-        _inputHandler.ShipDrag -= DragShip;
-        _inputHandler.ShipDown -= PickDownShip;
-    }
-    private void PickUpShip(Vector2 vector)
+    protected override void PickUpShip(Vector2 vector)
     {
         if (_cellManager.FindCell(vector, out firstCell))
         {
-            firstCell = firstCell.CellType != CellType.Ship ? null : firstCell;
+            firstCell = firstCell.ItemType != ItemType.Ship ? null : firstCell;
         }
 
     }
 
-    private void DragShip(Vector3 vector)
+    protected override void DragShip(Vector3 vector)
     {
         if (firstCell != null)
         {
@@ -50,7 +26,7 @@ public class ShipDragHandler : MonoBehaviour
         }
     }
 
-    private void PickDownShip(Vector2 vector)
+    protected override void PickDownShip(Vector2 vector)
     {
         if (firstCell == null) return;
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет
@@ -67,7 +43,7 @@ public class ShipDragHandler : MonoBehaviour
 
             destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].item = firstCell.item;
             destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].Level = firstCell.Level;
-            destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].CellType = firstCell.CellType;
+            destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].ItemType = firstCell.ItemType;
             firstCell.item = Instantiate(_cellManager.shipsArray[firstCell.Level - 1], new Vector3(firstCell.coordinates.x, firstCell.coordinates.y, -0.5f), gameObject.transform.rotation);
             firstCell.item.transform.parent = this.transform;
 
@@ -85,7 +61,7 @@ public class ShipDragHandler : MonoBehaviour
         //разрущаем корабли и создаем новый
 
         Destroy(secondCell.item);
-        secondCell.CreateItem(firstCell.Level + 1, destinationCellManager, CellType.Ship);
+        secondCell.CreateItem(firstCell.Level + 1, destinationCellManager, ItemType.Ship);
         firstCell.item.transform.position = firstCell.coordinates;
        
 
