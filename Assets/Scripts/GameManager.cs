@@ -36,12 +36,12 @@ public class GameManager : MonoBehaviour
 
         ItemsManager.CreateTable(ItemsManager.columnsCount, ItemsManager.rowsCount);
         ItemsManager.AddItemRandomPlace(1, 1, ItemType.Ship);
-        ItemsManager.GetComponent<NewShipDragHandler>().TakeMove.AddListener(TakeMove);
+        ItemsManager.TakeMove.AddListener(TakeMove);
 
         InventoryManager.CreateTable(InventoryManager.columnsCount, InventoryManager.rowsCount);
         InventoryManager.AddItemRandomPlace(1, 1, ItemType.Rocket);
 
-        cellSpawnManager.GetComponent<ShipDragHandler>().TakeMove.AddListener(TakeMove);
+        cellSpawnManager.TakeMove.AddListener(TakeMove);
         cellSpawnManager.gameOver += GameOver;
     }
 
