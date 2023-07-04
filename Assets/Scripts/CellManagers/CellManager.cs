@@ -59,10 +59,6 @@ public class CellManager : MonoBehaviour
         return new Vector2(startPosX + transform.position.x, startPosY + transform.position.y);
     }
 
-    public Vector2 FindCellPosition(int xIndex, int yIndex)
-    {
-        return FindStartPosition(columnsCount, rowsCount) + GetShiftFromStart(xIndex, yIndex);
-    }
 
     public bool FindCell(Vector2 point, out Cell cellOut)
     {

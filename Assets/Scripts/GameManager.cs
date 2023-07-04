@@ -52,69 +52,7 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public bool FindTask(TableCellManager cellManager, TaskCellManager taskManager)
-    {
-        if (taskManager == null) return false;
-        List<Cell> listObstacle = new List<Cell>();
-        List<Cell> array = new List<Cell>();
 
-        string task = null;
-
-        int coltask = taskManager.columnsCount;
-        int rowtask = taskManager.rowsCount;
-        int rowtable = cellManager.rowsCount;
-
-        
-
-        foreach (var item in taskManager.cellsArray)
-        {
-            task += item.Level.ToString();
-        }
-        foreach (var item in cellManager.cellsArray)
-        {
-            array.Add(item);
-        }
-
-        for (int i = 0; i < (array.Count - rowtable * (coltask - 1) - (coltask - 1)); i++)
-        {
-            Cell[] temp = new Cell[0];
-            listObstacle.Clear();
-            string table = null;
-            for (int j = 0; j < coltask; j++)
-            {
-              temp =  temp.Concat(array.Skip((i + rowtable * j)).Take(rowtask)).ToArray();
-            
-            }
-            foreach(var item in temp)
-            {
-                if (item.ItemType == ItemType.Obstacle)
-                {
-                    listObstacle.Add(item);
-                    table += "0";
-                }
-                else
-                {
-                    table += item.Level.ToString();
-                }
-            }
-            if (task.Equals(table))
-            {
-                //foreach (var item in listObstacle)
-                //{
-                //    Destroy(item.item);
-                //    item.item = null;
-                //    item.Level = 0;
-                //}
-                return true;
-            }
-        }
-
-
-       
-        return false;
-            
-
-    }
     public void TakeMove()
     {
         MovesCounter.CountMoves++;
@@ -126,17 +64,14 @@ public class GameManager : MonoBehaviour
         {
             cellSpawnManager.AddItemRandomPlace(1, 1, ItemType.Obstacle);
         }
-        if (FindTask(cellSpawnManager, TaskManager))
+        if (TaskManager.FindTask(cellSpawnManager))
         {
             point += 5;
-            RefreshTask();
+            TaskManager.DiscardTable();
+            TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
+            TaskManager.CreateTask(maxlevel, 4);
         }
     }
 
-    public void RefreshTask()
-    {
-        TaskManager.DiscardTable();
-        TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
-        TaskManager.CreateTask(maxlevel, 5);
-    }
+
 }
