@@ -45,6 +45,7 @@ public class InventoryCellManager : CellManager
                 && secondCell.ItemType == ItemType.Obstacle)
             {
                 points-= 1;
+                UpdateVisual();
                 //разрущаем корабли и создаем новый
                 Destroy(secondCell.item);
                 secondCell.item = null;
@@ -52,6 +53,27 @@ public class InventoryCellManager : CellManager
                 secondCell.Level = 0;
                 firstCLick = true;
             }
+        }
+    }
+
+    public void UpdateVisual()
+    {
+        if(points>= 1) { Show(); }
+        else { Hide(); }
+    }
+
+    private void Show()
+    {
+        foreach (CellInventory item in cellsArray)
+        {
+            item.Show();
+        }
+    }
+    private void Hide()
+    {
+        foreach (CellInventory item in cellsArray)
+        {
+            item.Hide();
         }
     }
 }

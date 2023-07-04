@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
         {
             
             InventoryManager.points += 1;
+            InventoryManager.UpdateVisual();
             TaskManager.DiscardTable();
             TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
             TaskManager.CreateTask(maxlevel, 4);
