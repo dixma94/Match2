@@ -61,7 +61,7 @@ public class NewShipDragHandler : DragHandler
         //разрущаем корабли и создаем новый
 
         Destroy(secondCell.item);
-        secondCell.CreateItem(firstCell.Level + 1, destinationCellManager, ItemType.Ship);
+        secondCell.CreateItem(firstCell.Level + 1, ItemType.Ship);
         firstCell.item.transform.position = firstCell.coordinates;
        
 

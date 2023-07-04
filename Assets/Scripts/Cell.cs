@@ -14,6 +14,9 @@ public class Cell : MonoBehaviour
     public Vector2 coordinates;
     public GameObject item;
     public ItemType ItemType = ItemType.Empty;
+    public GameObject[] shipsArray;
+    public GameObject[] obstacleArray;
+    public GameObject[] rocketsArray;
     public int Level;
 
     public bool IsHaveShip
@@ -27,7 +30,7 @@ public class Cell : MonoBehaviour
     public int ArrayColIndex { get; set; }
     public int ArrayRowIndex { get; set; }
 
-    public void CreateItem(int level,CellManager cellManager, ItemType type)
+    public void CreateItem(int level, ItemType type)
     {
 
         switch (type)
@@ -35,12 +38,15 @@ public class Cell : MonoBehaviour
             case ItemType.Empty:
                 break;
             case ItemType.Ship:
+                Level = level;
+                item = Instantiate(shipsArray[level -1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
+                break;
             case ItemType.Rocket:
                 Level = level;
-                item = Instantiate(cellManager.shipsArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
+                item = Instantiate(rocketsArray[level-1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
                 break;
             case ItemType.Obstacle:
-                item = Instantiate(cellManager.obstacleArray[level - 1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
+                item = Instantiate(obstacleArray[level-1], new Vector3(coordinates.x, coordinates.y, -0.5f), gameObject.transform.rotation);
                 Level = -1;
                 break;
 

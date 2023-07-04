@@ -15,7 +15,7 @@ public class TaskCellManager : CellManager
             var cells = cellsArray.Cast<Cell>().Where(cell => cell.ItemType == ItemType.Empty);
             var rndElement = UnityEngine.Random.Range(0, cells.Count());
             var rndLevel = UnityEngine.Random.Range(1, maxLevel);
-            cells.ElementAt(rndElement).CreateItem(rndLevel, this, ItemType.Ship);
+            cells.ElementAt(rndElement).CreateItem(rndLevel, ItemType.Ship);
         }
 
     }

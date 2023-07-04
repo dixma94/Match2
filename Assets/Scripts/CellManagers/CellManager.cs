@@ -96,7 +96,7 @@ public class CellManager : MonoBehaviour
             else
             {
                 var rnd = UnityEngine.Random.Range(0, cells.Count());
-                cells.ElementAt(rnd).CreateItem(level, this, type);
+                cells.ElementAt(rnd).CreateItem(level, type);
             }
         }
 

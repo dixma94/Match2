@@ -65,7 +65,7 @@ public  class ShipDragHandler : DragHandler
         Destroy(secondCell.item);
         firstCell.item = null;
         firstCell.ItemType = ItemType.Empty;
-        secondCell.CreateItem(firstCell.Level + 1, _cellManager, ItemType.Ship);
+        secondCell.CreateItem(firstCell.Level + 1, ItemType.Ship);
         firstCell.Level = 0;
 
 
