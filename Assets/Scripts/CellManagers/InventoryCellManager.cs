@@ -10,25 +10,21 @@ public class InventoryCellManager : CellManager
     private bool firstCLick = true;
     private Cell firstCell;
     private Cell secondCell;
-    private InputHandler _inputHandler;
+
 
     public int points;
 
     public UnityEvent TakeMove;
 
-    private void Awake()
-    {
-        _inputHandler = GetComponent<InputHandler>();
 
-    }
     private void OnEnable()
     {
-        _inputHandler.ShipUp += PickUpShip;
+        InputHandler.Instance.ShipUp += PickUpShip;
     }
 
     private void OnDisable()
     {
-        _inputHandler.ShipUp -= PickUpShip;
+        InputHandler.Instance.ShipUp -= PickUpShip;
 
     }
      void PickUpShip(Vector2 vector)

@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public abstract class DragHandler : MonoBehaviour
 {
     protected CellManager _cellManager;
-    protected InputHandler _inputHandler;
+
 
     public UnityEvent TakeMove;
 
@@ -15,21 +15,21 @@ public abstract class DragHandler : MonoBehaviour
     protected virtual void Awake()
     {
       _cellManager = GetComponent<CellManager>();
-      _inputHandler = GetComponent<InputHandler>();
+
 
     }
     protected virtual void OnEnable()
     {
-        _inputHandler.ShipUp += PickUpShip;
-        _inputHandler.ShipDrag += DragShip;
-        _inputHandler.ShipDown += PickDownShip;
+        InputHandler.Instance.ShipUp += PickUpShip;
+        InputHandler.Instance.ShipDrag += DragShip;
+        InputHandler.Instance.ShipDown += PickDownShip;
     }
 
     protected virtual void OnDisable()
     {
-        _inputHandler.ShipUp -= PickUpShip;
-        _inputHandler.ShipDrag -= DragShip;
-        _inputHandler.ShipDown -= PickDownShip;
+        InputHandler.Instance.ShipUp -= PickUpShip;
+        InputHandler.Instance.ShipDrag -= DragShip;
+        InputHandler.Instance.ShipDown -= PickDownShip;
     }
     protected virtual void PickUpShip(Vector2 vector) { }
 

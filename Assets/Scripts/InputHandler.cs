@@ -10,6 +10,13 @@ public class InputHandler : MonoBehaviour
     public Action<Vector3> ShipDrag;
     public Action<Vector2> ShipDown;
 
+    public static InputHandler Instance { get; private set; }
+
+    private void Awake()
+    {
+        Instance = this; 
+    }
+
     [SerializeField] private Camera _camera;
 
     // Update is called once per frame
