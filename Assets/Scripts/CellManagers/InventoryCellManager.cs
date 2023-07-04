@@ -8,15 +8,14 @@ public class InventoryCellManager : CellManager
     [SerializeField]
     private TableCellManager destinationCellManager;
     private bool firstCLick = true;
+    private Cell firstCell;
+    private Cell secondCell;
+    private InputHandler _inputHandler;
 
     public int points;
 
-    private InputHandler _inputHandler;
-
     public UnityEvent TakeMove;
 
-    private Cell firstCell;
-    private Cell secondCell;
     private void Awake()
     {
         _inputHandler = GetComponent<InputHandler>();
@@ -43,8 +42,13 @@ public class InventoryCellManager : CellManager
         }
         else
         {
-            if (firstCell != null && destinationCellManager.FindCell(vector, out secondCell) && secondCell.ItemType == ItemType.Obstacle)
+
+            if (points>= 1 
+                && firstCell != null 
+                && destinationCellManager.FindCell(vector, out secondCell) 
+                && secondCell.ItemType == ItemType.Obstacle)
             {
+                points-= 1;
                 //разрущаем корабли и создаем новый
                 Destroy(secondCell.item);
                 secondCell.item = null;

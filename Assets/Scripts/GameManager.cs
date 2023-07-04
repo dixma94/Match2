@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.AddItemRandomPlace(15, 1,ItemType.Obstacle);
+        cellSpawnManager.AddItemRandomPlace(20, 1,ItemType.Obstacle);
         cellSpawnManager.AddItemRandomPlace(5, 1,ItemType.Ship);
         cellSpawnManager.AddItemRandomPlace(3, 2, ItemType.Ship);
         cellSpawnManager.AddItemRandomPlace(1, 3, ItemType.Ship);
@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
         if (TaskManager.FindTask(cellSpawnManager))
         {
             point += 5;
+            InventoryManager.points += 1;
             TaskManager.DiscardTable();
             TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
             TaskManager.CreateTask(maxlevel, 4);

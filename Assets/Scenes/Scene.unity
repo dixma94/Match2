@@ -1047,7 +1047,6 @@ GameObject:
   - component: {fileID: 1367156797}
   - component: {fileID: 1367156796}
   - component: {fileID: 1367156795}
-  - component: {fileID: 1367156794}
   m_Layer: 0
   m_Name: Rockets
   m_TagString: Untagged
@@ -1055,22 +1054,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1367156794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1367156793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae25c0d266f3c6479fbf0f036c50558, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TakeMove:
-    m_PersistentCalls:
-      m_Calls: []
-  destinationCellManager: {fileID: 1241703903}
 --- !u!114 &1367156795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1101,7 +1084,11 @@ MonoBehaviour:
   rowsCount: 1
   cellMargin: 0
   cellSize: 2
-  points: 8
+  destinationCellManager: {fileID: 1241703903}
+  points: 4
+  TakeMove:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1367156797
 Transform:
   m_ObjectHideFlags: 0
