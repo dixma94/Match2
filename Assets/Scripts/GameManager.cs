@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -13,9 +14,9 @@ public class GameManager : MonoBehaviour
     public ItemsCellManager ItemsManager;
     public InventoryCellManager InventoryManager;
     public GameObject Canvas;
-    public int point;
-    
+    public static int movesCount;
 
+    public UnityEvent MovesCountChanged;
     private int maxlevel=3;
 
     private void Start()
@@ -55,18 +56,19 @@ public class GameManager : MonoBehaviour
 
     public void TakeMove()
     {
-        MovesCounter.CountMoves++;
-        if (MovesCounter.CountMoves%20 == 0)
+        movesCount++;
+        MovesCountChanged?.Invoke();
+        if (movesCount % 20 == 0)
         {
             maxlevel++;
         }
-        if (MovesCounter._CountMoves%8 == 0)
+        if (movesCount % 8 == 0)
         {
             cellSpawnManager.AddItemRandomPlace(1, 1, ItemType.Obstacle);
         }
         if (TaskManager.FindTask(cellSpawnManager))
         {
-            point += 5;
+            
             InventoryManager.points += 1;
             TaskManager.DiscardTable();
             TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
