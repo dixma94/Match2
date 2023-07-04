@@ -7,7 +7,7 @@ public class TaskCellManager : CellManager
 {
     public void CreateTask(int maxLevel, int shipsCount)
     {
-        if (shipsCount > cellsArray.Length || maxLevel > shipsArray.Length) return;
+        if (shipsCount > cellsArray.Length ) return;
 
 
         for (int i = 0; i < shipsCount; i++)

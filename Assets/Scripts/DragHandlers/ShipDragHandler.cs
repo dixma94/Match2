@@ -37,17 +37,16 @@ public  class ShipDragHandler : DragHandler
         }
 
         //если перетянули на пустую, перемещаем корабль
-        if (!secondCell.IsHaveShip)
+        if (secondCell.ItemType == ItemType.Empty)
         {
             firstCell.item.transform.position = secondCell.coordinates;
 
-            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].item = firstCell.item;
-            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].Level = firstCell.Level;
-            _cellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].ItemType = firstCell.ItemType;
-            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].item = null;
-            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].Level = 0;
-            _cellManager.cellsArray[firstCell.ArrayColIndex, firstCell.ArrayRowIndex].ItemType = ItemType.Empty;
-
+            secondCell.item = firstCell.item;
+            secondCell.Level = firstCell.Level;
+            secondCell.ItemType = firstCell.ItemType;
+            firstCell.item = null;
+            firstCell.Level = 0;
+            firstCell.ItemType = ItemType.Empty;
 
             TakeMove?.Invoke();
             return;

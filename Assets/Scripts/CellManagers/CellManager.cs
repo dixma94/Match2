@@ -10,9 +10,6 @@ public class CellManager : MonoBehaviour
 
     public Cell[,] cellsArray;
 
-    public GameObject[] shipsArray;
-    public GameObject[] obstacleArray;
-
     public Action gameOver;
 
     public int columnsCount, rowsCount;

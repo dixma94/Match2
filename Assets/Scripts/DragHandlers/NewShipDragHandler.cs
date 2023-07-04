@@ -37,15 +37,15 @@ public class NewShipDragHandler : DragHandler
         }
 
         //если перетянули на пустую, перемещаем корабль
-        if (!secondCell.IsHaveShip)
+        if (secondCell.ItemType ==ItemType.Empty)
         {
             firstCell.item.transform.position = secondCell.coordinates;
 
-            destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].item = firstCell.item;
-            destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].Level = firstCell.Level;
-            destinationCellManager.cellsArray[secondCell.ArrayColIndex, secondCell.ArrayRowIndex].ItemType = firstCell.ItemType;
-            firstCell.item = Instantiate(_cellManager.shipsArray[firstCell.Level - 1], new Vector3(firstCell.coordinates.x, firstCell.coordinates.y, -0.5f), gameObject.transform.rotation);
-            firstCell.item.transform.parent = this.transform;
+            secondCell.item = firstCell.item;
+            secondCell.Level = firstCell.Level;
+            secondCell.ItemType = firstCell.ItemType;
+            firstCell.CreateItem(firstCell.Level, firstCell.ItemType);
+
 
             TakeMove?.Invoke();
             return;

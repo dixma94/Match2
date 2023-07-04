@@ -118,7 +118,7 @@ public class GameManager : MonoBehaviour
     public void TakeMove()
     {
         MovesCounter.CountMoves++;
-        if (MovesCounter.CountMoves%20 == 0 && maxlevel < cellSpawnManager.shipsArray.Length)
+        if (MovesCounter.CountMoves%20 == 0)
         {
             maxlevel++;
         }
