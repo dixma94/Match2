@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,12 @@ public class InventoryCellManager : CellManager
     public int points;
 
     public UnityEvent TakeMove;
+    public EventHandler<InventoryChangedArgs> InventoryChanged;
+
+    public class InventoryChangedArgs : EventArgs
+    {
+       public int points;
+    }
 
 
     private void OnEnable()
@@ -27,7 +34,8 @@ public class InventoryCellManager : CellManager
         InputHandler.Instance.ShipUp -= PickUpShip;
 
     }
-     void PickUpShip(Vector2 vector)
+
+    void PickUpShip(Vector2 vector)
     {
         if (firstCLick)
         {
@@ -58,8 +66,15 @@ public class InventoryCellManager : CellManager
 
     public void UpdateVisual()
     {
-        if(points>= 1) { Show(); }
-        else { Hide(); }
+        if(points>= 1) 
+        { 
+            Show(); 
+        }
+        else 
+        { 
+            Hide(); 
+        }
+        InventoryChanged?.Invoke(this, new InventoryChangedArgs() { points= points });
     }
 
     private void Show()
