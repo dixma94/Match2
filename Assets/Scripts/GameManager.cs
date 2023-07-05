@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         ItemsManager.TakeMove.AddListener(TakeMove);
         cellSpawnManager.TakeMove.AddListener(TakeMove);
         cellSpawnManager.gameOver += GameOver;
+        InputHandler.Instance.EscKeyDown += PauseResumeGame;
         StartGame();
 
     }
@@ -68,7 +69,26 @@ public class GameManager : MonoBehaviour
                 gameState = GameState.Over;
                 break;
         }
-        OnStateChanged?.Invoke();
+           OnStateChanged?.Invoke();
+    }
+
+    private void PauseResumeGame()
+    {
+        if (gameState == GameState.Pause)
+        {
+            ChangeState(GameState.Playing);
+            return;
+        }
+        if (gameState == GameState.Playing)
+        {
+            ChangeState(GameState.Pause);
+            return;
+        }
+        
+    }
+    private void ResumeGame()
+    {
+        
     }
 
     private void StartGame()

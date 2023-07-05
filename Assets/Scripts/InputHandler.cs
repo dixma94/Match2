@@ -9,6 +9,7 @@ public class InputHandler : MonoBehaviour
     public Action<Vector2> ShipUp;
     public Action<Vector3> ShipDrag;
     public Action<Vector2> ShipDown;
+    public Action EscKeyDown;
 
     public static InputHandler Instance { get; private set; }
 
@@ -40,6 +41,10 @@ public class InputHandler : MonoBehaviour
         {
                 ShipDown?.Invoke(_camera.ScreenToWorldPoint(Input.mousePosition));
             
+        }
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            EscKeyDown?.Invoke();
         }
 
     }
