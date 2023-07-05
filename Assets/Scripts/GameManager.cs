@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
  
 
     public static int movesCount;
+    public static int maximumScore;
     
     public static GameState gameState;
 
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour
     private GameLevel gameLevel;
     [SerializeField] private int movesToObstacleMax;
     private int movesToObstacle;
+
+    private const string GAME_PREFS_MAX_SCORE = "MAX SCORE";
 
 
     private void Start()
@@ -114,6 +117,8 @@ public class GameManager : MonoBehaviour
         InventoryManager.AddItemRandomPlace(1, 1, ItemType.Rocket);
         ChangeState(GameState.Playing);
 
+        maximumScore = PlayerPrefs.GetInt(GAME_PREFS_MAX_SCORE);
+
     }
 
     public void GameOver()
@@ -130,6 +135,13 @@ public class GameManager : MonoBehaviour
         movesCount++;
         movesToObstacle++;
         MovesCountChanged?.Invoke();
+        if (movesCount >maximumScore)
+        {
+            maximumScore = movesCount;
+            PlayerPrefs.SetInt(GAME_PREFS_MAX_SCORE, maximumScore);
+            PlayerPrefs.Save();
+        }
+
         UpdateLevel();
 
         if (movesToObstacle == movesToObstacleMax)

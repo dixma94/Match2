@@ -9,9 +9,12 @@ public class GameMenuUI : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
     [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private TextMeshProUGUI maximumScoreText;
     [SerializeField] private Button exitButton;
     [SerializeField] private Button restartButton;
     [SerializeField] private Button resumeButton;
+
+  
 
     private void Awake()
     {
@@ -40,6 +43,7 @@ public class GameMenuUI : MonoBehaviour
         if (GameManager.gameState == GameState.Pause)
         {
             scoreText.text = "Score: " + GameManager.movesCount.ToString();
+            maximumScoreText.text = "Maximum Score: "+ GameManager.maximumScore.ToString();
             Show();
         }
         else
