@@ -18,7 +18,12 @@ public enum GameLevel
     Level8
 
 }
-
+public enum GameState
+{
+    Pause,
+    Playing,
+    Over
+}
 public class GameManager : MonoBehaviour
 {
 
@@ -26,23 +31,55 @@ public class GameManager : MonoBehaviour
     public TaskCellManager TaskManager;
     public ItemsCellManager ItemsManager;
     public InventoryCellManager InventoryManager;
-    public GameObject GameOverUI;
-    public static int movesCount;
+ 
 
+    public static int movesCount;
+    
+    public static GameState gameState;
 
     public UnityEvent MovesCountChanged;
+    public UnityEvent OnStateChanged;
+
     private GameLevel gameLevel;
     [SerializeField] private int movesToObstacleMax;
     private int movesToObstacle;
 
+
     private void Start()
+    {
+       
+        ItemsManager.TakeMove.AddListener(TakeMove);
+        cellSpawnManager.TakeMove.AddListener(TakeMove);
+        cellSpawnManager.gameOver += GameOver;
+        StartGame();
+
+    }
+    public void ChangeState(GameState mode)
+    {
+        switch (mode)
+        {
+            case GameState.Pause:
+                gameState = GameState.Pause; 
+                break;
+            case GameState.Playing:
+                gameState = GameState.Playing;
+                break;
+            case GameState.Over:
+                gameState = GameState.Over;
+                break;
+        }
+        OnStateChanged?.Invoke();
+    }
+
+    private void StartGame()
     {
         gameLevel = GameLevel.Level2;
 
+      
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.AddItemRandomPlace(20, 1,ItemType.Obstacle);
-        cellSpawnManager.AddItemRandomPlace(5, 1,ItemType.Ship);
+        cellSpawnManager.AddItemRandomPlace(20, 1, ItemType.Obstacle);
+        cellSpawnManager.AddItemRandomPlace(5, 1, ItemType.Ship);
         cellSpawnManager.AddItemRandomPlace(3, 2, ItemType.Ship);
         cellSpawnManager.AddItemRandomPlace(1, 3, ItemType.Ship);
         //создаем поле для задания
@@ -52,20 +89,18 @@ public class GameManager : MonoBehaviour
 
         ItemsManager.CreateTable(ItemsManager.columnsCount, ItemsManager.rowsCount);
         ItemsManager.AddItemRandomPlace(1, 1, ItemType.Ship);
-        ItemsManager.TakeMove.AddListener(TakeMove);
 
         InventoryManager.CreateTable(InventoryManager.columnsCount, InventoryManager.rowsCount);
         InventoryManager.AddItemRandomPlace(1, 1, ItemType.Rocket);
+        ChangeState(GameState.Playing);
 
-        cellSpawnManager.TakeMove.AddListener(TakeMove);
-        cellSpawnManager.gameOver += GameOver;
     }
 
-
-   
     public void GameOver()
     {
-        GameOverUI.SetActive(true);
+        ChangeState(GameState.Over);
+        
+    
     }
 
 
@@ -92,6 +127,7 @@ public class GameManager : MonoBehaviour
             TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
             TaskManager.CreateTask(gameLevel, 6);
         }
+        
     }
 
     private void UpdateLevel()

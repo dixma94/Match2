@@ -34,9 +34,12 @@ public class TableCellManager : CellManager
 
     private void PickUpShip(Vector2 vector)
     {
-        if (FindCell(vector, out firstCell))
+        if(GameManager.gameState == GameState.Playing)
         {
-            firstCell = firstCell.ItemType != ItemType.Ship ? null : firstCell;
+            if (FindCell(vector, out firstCell))
+            {
+                firstCell = firstCell.ItemType != ItemType.Ship ? null : firstCell;
+            }
         }
 
     }

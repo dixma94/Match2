@@ -41,31 +41,35 @@ public class InventoryCellManager : CellManager
 
     void PickUpShip(Vector2 vector)
     {
-        if (firstCLick)
+        if(GameManager.gameState==GameState.Playing)
         {
-            if (FindCell(vector, out firstCell))
+            if (firstCLick)
             {
-                firstCLick = false;
+                if (FindCell(vector, out firstCell))
+                {
+                    firstCLick = false;
+                }
             }
-        }
-        else
-        {
+            else
+            {
 
-            if (points>= 1 
-                && firstCell != null 
-                && destinationCellManager.FindCell(vector, out secondCell) 
-                && secondCell.ItemType == ItemType.Obstacle)
-            {
-                points-= 1;
-                UpdateVisual();
-                //разрущаем корабли и создаем новый
-                Destroy(secondCell.item);
-                secondCell.item = null;
-                secondCell.ItemType = ItemType.Empty;
-                secondCell.Level = 0;
-                firstCLick = true;
+                if (points >= 1
+                    && firstCell != null
+                    && destinationCellManager.FindCell(vector, out secondCell)
+                    && secondCell.ItemType == ItemType.Obstacle)
+                {
+                    points -= 1;
+                    UpdateVisual();
+                    //разрущаем корабли и создаем новый
+                    Destroy(secondCell.item);
+                    secondCell.item = null;
+                    secondCell.ItemType = ItemType.Empty;
+                    secondCell.Level = 0;
+                    firstCLick = true;
+                }
             }
         }
+        
     }
 
     public void UpdateVisual()
