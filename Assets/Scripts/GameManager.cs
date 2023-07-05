@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-       
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         ItemsManager.TakeMove.AddListener(TakeMove);
         cellSpawnManager.TakeMove.AddListener(TakeMove);
         cellSpawnManager.gameOver += GameOver;
