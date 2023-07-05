@@ -12,7 +12,7 @@ public class ItemsCellManager : CellManager
     private Cell firstCell;
     private Cell secondCell;
 
-    private void OnEnable()
+    private void Start()
     {
         InputHandler.Instance.ShipUp += PickUpShip;
         InputHandler.Instance.ShipDrag += DragShip;

@@ -20,11 +20,11 @@ public class GameMenuUI : MonoBehaviour
     {
         exitButton.onClick.AddListener(() =>
         {
-
+            SceneManager.LoadScene(0);
         });
         restartButton.onClick.AddListener(() =>
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         });
         resumeButton.onClick.AddListener(() => 
         {
