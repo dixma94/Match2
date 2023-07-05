@@ -26,8 +26,9 @@ public class GameManager : MonoBehaviour
     public TaskCellManager TaskManager;
     public ItemsCellManager ItemsManager;
     public InventoryCellManager InventoryManager;
-    public GameObject Canvas;
+    public GameObject GameOverUI;
     public static int movesCount;
+
 
     public UnityEvent MovesCountChanged;
     private GameLevel gameLevel;
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
    
     public void GameOver()
     {
-        Canvas.SetActive(true);
+        GameOverUI.SetActive(true);
     }
 
 
