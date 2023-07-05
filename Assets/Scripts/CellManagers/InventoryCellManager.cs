@@ -23,6 +23,10 @@ public class InventoryCellManager : CellManager
        public int points;
     }
 
+    private void Start()
+    {
+        InventoryChanged?.Invoke(this, new InventoryChangedArgs() { points = points });
+    }
 
     private void OnEnable()
     {
