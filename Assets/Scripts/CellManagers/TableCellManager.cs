@@ -18,21 +18,9 @@ public class TableCellManager : CellManager
     private Cell secondCell;
 
 
-    private void OnEnable()
-    {
-        InputHandler.Instance.ShipUp += PickUpShip;
-        InputHandler.Instance.ShipDrag += DragShip;
-        InputHandler.Instance.ShipDown += PickDownShip;
-    }
 
-    private void OnDisable()
-    {
-        InputHandler.Instance.ShipUp -= PickUpShip;
-        InputHandler.Instance.ShipDrag -= DragShip;
-        InputHandler.Instance.ShipDown -= PickDownShip;
-    }
 
-    private void PickUpShip(Vector2 vector)
+    override private protected void PickUpShip(Vector2 vector)
     {
         if(GameManager.gameState == GameState.Playing)
         {
@@ -44,7 +32,7 @@ public class TableCellManager : CellManager
 
     }
 
-    private void DragShip(Vector3 vector)
+    override private protected void DragShip(Vector3 vector)
     {
         if (firstCell != null)
         {
@@ -53,7 +41,7 @@ public class TableCellManager : CellManager
         }
     }
 
-    private void PickDownShip(Vector2 vector)
+    override private protected void PickDownShip(Vector2 vector)
     {
         if (firstCell == null) return;
 

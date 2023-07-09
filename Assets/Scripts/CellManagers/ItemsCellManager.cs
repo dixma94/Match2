@@ -12,20 +12,8 @@ public class ItemsCellManager : CellManager
     private Cell firstCell;
     private Cell secondCell;
 
-    private void Start()
-    {
-        InputHandler.Instance.ShipUp += PickUpShip;
-        InputHandler.Instance.ShipDrag += DragShip;
-        InputHandler.Instance.ShipDown += PickDownShip;
-    }
 
-    private void OnDisable()
-    {
-        InputHandler.Instance.ShipUp -= PickUpShip;
-        InputHandler.Instance.ShipDrag -= DragShip;
-        InputHandler.Instance.ShipDown -= PickDownShip;
-    }
-    private void PickUpShip(Vector2 vector)
+    override private protected void PickUpShip(Vector2 vector)
     {
         if (GameManager.gameState == GameState.Playing)
         {
@@ -34,11 +22,10 @@ public class ItemsCellManager : CellManager
                 firstCell = firstCell.ItemType != ItemType.Ship ? null : firstCell;
             }
         }
-       
 
     }
 
-    private void DragShip(Vector3 vector)
+    override private protected void DragShip(Vector3 vector)
     {
         if (firstCell != null)
         {
@@ -47,7 +34,7 @@ public class ItemsCellManager : CellManager
         }
     }
 
-    private void PickDownShip(Vector2 vector)
+    override private protected void PickDownShip(Vector2 vector)
     {
         if (firstCell == null) return;
         //проверяем перетянули ли на клетку, возращаем позицую первой если нет

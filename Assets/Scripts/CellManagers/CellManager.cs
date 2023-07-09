@@ -45,8 +45,6 @@ public class CellManager : MonoBehaviour
 
     }
 
-
-
     public Vector2 GetShiftFromStart(int col, int row)
     {
         return new Vector2(col * (cellSize + cellMargin), -row * (cellSize + cellMargin));
@@ -58,7 +56,6 @@ public class CellManager : MonoBehaviour
         float startPosY = (rowsCount * cellSize + (rowsCount - 1) * cellMargin) / 2.0f - cellSize / 2;
         return new Vector2(startPosX + transform.position.x, startPosY + transform.position.y);
     }
-
 
     public bool FindCell(Vector2 point, out Cell cellOut)
     {
@@ -78,8 +75,6 @@ public class CellManager : MonoBehaviour
         return false;
     }
 
-
-
     public void AddItemRandomPlace(int count, int level, ItemType type)
     {
         for (int i = 0; i < count; i++)
@@ -95,7 +90,6 @@ public class CellManager : MonoBehaviour
 
     }
    
-
     public void DiscardTable()
     {
         if (cellsArray != null)
@@ -109,5 +103,31 @@ public class CellManager : MonoBehaviour
     }
 
 
+    private void OnEnable()
+    {
+        InputHandler.Instance.ShipUp += PickUpShip;
+        InputHandler.Instance.ShipDrag += DragShip;
+        InputHandler.Instance.ShipDown += PickDownShip;
+    }
 
+    private void OnDisable()
+    {
+        InputHandler.Instance.ShipUp -= PickUpShip;
+        InputHandler.Instance.ShipDrag -= DragShip;
+        InputHandler.Instance.ShipDown -= PickDownShip;
+    }
+    private protected virtual void PickUpShip(Vector2 vector)
+    {
+        
+    }
+
+    private protected virtual void DragShip(Vector3 vector)
+    {
+        
+    }
+
+    private protected virtual void PickDownShip(Vector2 vector)
+    {
+        
+    }
 }

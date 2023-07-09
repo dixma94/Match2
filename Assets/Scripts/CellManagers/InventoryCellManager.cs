@@ -28,18 +28,8 @@ public class InventoryCellManager : CellManager
         InventoryChanged?.Invoke(this, new InventoryChangedArgs() { points = points });
     }
 
-    private void OnEnable()
-    {
-        InputHandler.Instance.ShipUp += PickUpShip;
-    }
 
-    private void OnDisable()
-    {
-        InputHandler.Instance.ShipUp -= PickUpShip;
-
-    }
-
-    void PickUpShip(Vector2 vector)
+    override private protected void PickUpShip(Vector2 vector)
     {
         if(GameManager.gameState==GameState.Playing)
         {
