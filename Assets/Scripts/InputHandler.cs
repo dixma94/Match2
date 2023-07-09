@@ -15,7 +15,7 @@ public class InputHandler : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this; 
+        Instance = this;
     }
 
     [SerializeField] private Camera _camera;

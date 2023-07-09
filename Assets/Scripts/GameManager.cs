@@ -97,8 +97,9 @@ public class GameManager : MonoBehaviour
     private void StartGame()
     {
         gameLevel = GameLevel.Level2;
+        movesCount = 0;
+        MovesCountChanged?.Invoke();
 
-      
         //создаем поле для игры
         cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
         cellSpawnManager.AddItemRandomPlace(20, 1, ItemType.Obstacle);
