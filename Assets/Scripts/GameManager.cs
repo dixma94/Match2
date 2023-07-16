@@ -101,21 +101,31 @@ public class GameManager : MonoBehaviour
         MovesCountChanged?.Invoke();
 
         //создаем поле для игры
-        cellSpawnManager.CreateTable(cellSpawnManager.columnsCount, cellSpawnManager.rowsCount);
-        cellSpawnManager.AddItemRandomPlace(20, 1, ItemType.Obstacle);
-        cellSpawnManager.AddItemRandomPlace(5, 1, ItemType.Ship);
-        cellSpawnManager.AddItemRandomPlace(3, 2, ItemType.Ship);
-        cellSpawnManager.AddItemRandomPlace(1, 3, ItemType.Ship);
+        cellSpawnManager.CreateTable();
+        for (int i = 0; i < 20; i++)
+        {
+            cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Obstacle);
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
+        }
+        for (int i = 0; i < 3; i++)
+        {
+            cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(2, ItemType.Ship);
+        }
+        cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(3, ItemType.Ship);
+
         //создаем поле для задания
 
-        TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
+        TaskManager.CreateTable();
         TaskManager.CreateTask(gameLevel, 6);
 
-        ItemsManager.CreateTable(ItemsManager.columnsCount, ItemsManager.rowsCount);
-        ItemsManager.AddItemRandomPlace(1, 1, ItemType.Ship);
+        ItemsManager.CreateTable();
+        ItemsManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
 
-        InventoryManager.CreateTable(InventoryManager.columnsCount, InventoryManager.rowsCount);
-        InventoryManager.AddItemRandomPlace(1, 1, ItemType.Rocket);
+        InventoryManager.CreateTable();
+        InventoryManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Rocket);
         ChangeState(GameState.Playing);
 
         maximumScore = PlayerPrefs.GetInt(GAME_PREFS_MAX_SCORE);
@@ -147,7 +157,7 @@ public class GameManager : MonoBehaviour
 
         if (movesToObstacle == movesToObstacleMax)
         {
-            cellSpawnManager.AddItemRandomPlace(1, 1, ItemType.Obstacle);
+            cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Obstacle);
             movesToObstacle = 0;
         }
         if (TaskManager.FindTask(cellSpawnManager))
@@ -157,7 +167,7 @@ public class GameManager : MonoBehaviour
             InventoryManager.UpdateVisual();
 
             TaskManager.DiscardTable();
-            TaskManager.CreateTable(TaskManager.columnsCount, TaskManager.rowsCount);
+            TaskManager.CreateTable();
             TaskManager.CreateTask(gameLevel, 6);
         }
         

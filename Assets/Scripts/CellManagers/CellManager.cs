@@ -6,21 +6,16 @@ using UnityEngine;
 
 public class CellManager : MonoBehaviour
 {
-    public Cell cellPrefab;
+    [SerializeField] private Cell cellPrefab;
+    [SerializeField] private float cellMargin;
+    [SerializeField] private float cellSize = 1;
 
+    public int columnsCount, rowsCount;
     public Cell[,] cellsArray;
 
     public Action gameOver;
 
-    public int columnsCount, rowsCount;
-    public float cellMargin;
-
-    public float cellSize = 1;
-
-
-
-
-    public void CreateTable(int columnsCount, int rowsCount)
+    public void CreateTable()
     {
         DiscardTable();
         cellsArray = new Cell[columnsCount, rowsCount];
@@ -45,16 +40,16 @@ public class CellManager : MonoBehaviour
 
     }
 
-    public Vector2 GetShiftFromStart(int col, int row)
+    public void DiscardTable()
     {
-        return new Vector2(col * (cellSize + cellMargin), -row * (cellSize + cellMargin));
-    }
+        if (cellsArray != null)
+        {
+            foreach (var item in cellsArray)
+            {
+                Destroy(item.gameObject);
+            }
+        }
 
-    public Vector2 FindStartPosition(float columnsCount, float rowsCount)
-    {
-        float startPosX = -(columnsCount * cellSize + (columnsCount - 1) * cellMargin) / 2.0f + cellSize / 2;
-        float startPosY = (rowsCount * cellSize + (rowsCount - 1) * cellMargin) / 2.0f - cellSize / 2;
-        return new Vector2(startPosX + transform.position.x, startPosY + transform.position.y);
     }
 
     public bool FindCell(Vector2 point, out Cell cellOut)
@@ -75,33 +70,29 @@ public class CellManager : MonoBehaviour
         return false;
     }
 
-    public void AddItemRandomPlace(int count, int level, ItemType type)
+    public Cell GetRandomCell(ItemType itemType)
     {
-        for (int i = 0; i < count; i++)
-        {
-            var cells = cellsArray.Cast<Cell>().Where(cell => cell.ItemType == ItemType.Empty);
-            if (cells.Count() == 0) { gameOver.Invoke(); }
-            else
-            {
-                var rnd = UnityEngine.Random.Range(0, cells.Count());
-                cells.ElementAt(rnd).CreateItem(level, type);
-            }
-        }
+        var cells = cellsArray
+            .Cast<Cell>()
+            .Where(cell => 
+            cell.ItemType == ItemType.Empty);
+        return  cells
+            .ElementAt(UnityEngine.Random.Range(0, cells.Count()));
 
+    }
+
+    private Vector2 FindStartPosition(float columnsCount, float rowsCount)
+    {
+        float startPosX = -(columnsCount * cellSize + (columnsCount - 1) * cellMargin) / 2.0f + cellSize / 2;
+        float startPosY = (rowsCount * cellSize + (rowsCount - 1) * cellMargin) / 2.0f - cellSize / 2;
+        return new Vector2(startPosX + transform.position.x, startPosY + transform.position.y);
+    }
+
+    private Vector2 GetShiftFromStart(int col, int row)
+    {
+        return new Vector2(col * (cellSize + cellMargin), -row * (cellSize + cellMargin));
     }
    
-    public void DiscardTable()
-    {
-        if (cellsArray != null)
-        {
-            foreach (var item in cellsArray)
-            {
-                Destroy(item.gameObject);
-            }
-        }
-
-    }
-
 
     private void OnEnable()
     {

@@ -1,14 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum ItemType
-{
-    Empty,
-    Ship,
-    Obstacle,
-    Rocket
-}
 public class Cell : MonoBehaviour
 {
     public Vector2 coordinates;

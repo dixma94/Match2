@@ -10,15 +10,13 @@ public class TaskCellManager : CellManager
     
     public void CreateTask(GameLevel level, int shipsCount)
     {
-        if (shipsCount > cellsArray.Length ) return;
+        if (shipsCount > rowsCount*columnsCount ) return;
 
 
         for (int i = 0; i < shipsCount; i++)
         {
-            var cells = cellsArray.Cast<Cell>().Where(cell => cell.ItemType == ItemType.Empty);
-            var rndElement = UnityEngine.Random.Range(0, cells.Count());
-            var rndLevel = UnityEngine.Random.Range(1, (int)level + 2);
-            cells.ElementAt(rndElement).CreateItem(rndLevel, ItemType.Ship);
+            int rndLevel = UnityEngine.Random.Range(1, (int)level + 2);
+            GetRandomCell(ItemType.Empty).CreateItem(rndLevel, ItemType.Ship);
         }
 
     }
