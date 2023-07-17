@@ -5,18 +5,24 @@ using UnityEngine;
 public class GameSaveLoad
 {
     private const string GAME_PREFS_MAX_SCORE = "MAX SCORE";
-    public static int maximumScore;
+    public int maximumScore;
 
-    public static void Save(int movesCount)
+    public GameSaveLoad()
     {
-        maximumScore = movesCount;
-        PlayerPrefs.SetInt(GAME_PREFS_MAX_SCORE, GameSaveLoad.maximumScore);
-        PlayerPrefs.Save();
+        maximumScore = PlayerPrefs.GetInt(GAME_PREFS_MAX_SCORE);
     }
 
-    public static int LoadMovesCount()
+    public void Save(int movesCount)
     {
-       return PlayerPrefs.GetInt(GAME_PREFS_MAX_SCORE);
+        if (movesCount > maximumScore)
+        {
+            maximumScore = movesCount;
+            PlayerPrefs.SetInt(GAME_PREFS_MAX_SCORE, maximumScore);
+            PlayerPrefs.Save();
+        }
     }
+   
+
+
 
 }

@@ -17,19 +17,21 @@ public class GameManager : MonoBehaviour
 {
 
     public TableCellManager cellTableManager;
-    public TaskCellManager taskManager;
-    public ItemsCellManager itemsManager;
-    public InventoryCellManager inventoryManager;
+    public TaskCellManager cellTaskManager;
+    public ItemsCellManager cellItemsManager;
+    public InventoryCellManager CellInventoryManager;
     public ItemsDragDropHandler itemsDragDropHandler;
     public TableDragDropHandler tableDragDropHandler;
     public LevelSystem levelSystem;
     public GameStateSystem stateSystem;
+    public GameSaveLoad gameSaveLoad;
 
     private void Awake()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
 
-        levelSystem = new LevelSystem(cellTableManager, taskManager, inventoryManager);
+        gameSaveLoad = new GameSaveLoad();
+        levelSystem = new LevelSystem(cellTableManager, cellTaskManager, CellInventoryManager, gameSaveLoad);
         stateSystem = new GameStateSystem();
         itemsDragDropHandler.TakeMove += levelSystem.Move;
         tableDragDropHandler.TakeMove += levelSystem.Move;
@@ -63,18 +65,17 @@ public class GameManager : MonoBehaviour
         cellTableManager.CreateItemInCells(3, 2, ItemType.Ship);
         cellTableManager.CreateItemInCells(1,3, ItemType.Ship);
 
-        taskManager.CreateTable();
-        taskManager.CreateTask(levelSystem.gameLevel, 6);
+        cellTaskManager.CreateTable();
+        cellTaskManager.CreateTask(levelSystem.gameLevel, 6);
 
-        itemsManager.CreateTable();
-        itemsManager.CreateItemInCells(1, 1, ItemType.Ship);
+        cellItemsManager.CreateTable();
+        cellItemsManager.CreateItemInCells(1, 1, ItemType.Ship);
 
-        inventoryManager.CreateTable();
-        inventoryManager.CreateItemInCells(1, 1, ItemType.Rocket);
+        CellInventoryManager.CreateTable();
+        CellInventoryManager.CreateItemInCells(1, 1, ItemType.Rocket);
 
         stateSystem.ChangeState(GameState.Playing);
 
-        GameSaveLoad.maximumScore = GameSaveLoad.LoadMovesCount();
 
     }
 

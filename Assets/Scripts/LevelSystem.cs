@@ -26,9 +26,9 @@ public class LevelSystem
     private TableCellManager tableCellManager;
     private TaskCellManager taskCellManager;
     private InventoryCellManager inventoryCellManager;
+    private GameSaveLoad gameSaveLoad;
 
-
-    public LevelSystem(TableCellManager tableCellManager, TaskCellManager taskCellManager, InventoryCellManager inventoryCellManager)
+    public LevelSystem(TableCellManager tableCellManager, TaskCellManager taskCellManager, InventoryCellManager inventoryCellManager,GameSaveLoad gameSaveLoad)
     {
         movesCount = 0;
         movesToObstacle = 0;
@@ -37,6 +37,7 @@ public class LevelSystem
         this.tableCellManager = tableCellManager;
         this.taskCellManager = taskCellManager;
         this.inventoryCellManager = inventoryCellManager;
+        this.gameSaveLoad = gameSaveLoad;
         MovesCountChanged?.Invoke();
     }
 
@@ -46,9 +47,8 @@ public class LevelSystem
         movesCount++;
         movesToObstacle++;
         MovesCountChanged?.Invoke();
+        gameSaveLoad.Save(movesCount);
 
-        if (movesCount > GameSaveLoad.maximumScore)
-            GameSaveLoad.Save(movesCount);
 
         UpdateLevel();
 

@@ -33,7 +33,7 @@ public class GameOverUI : MonoBehaviour
         if (gameManager.stateSystem.gameState== GameState.Over)
         {
             scoreText.text = "Score: " + gameManager.levelSystem.movesCount.ToString();
-            maximumScoreText.text = "Maximum Score: " + GameSaveLoad.maximumScore.ToString();
+            maximumScoreText.text = "Maximum Score: " + gameManager.gameSaveLoad.maximumScore.ToString();
             Show();
         }
         else
