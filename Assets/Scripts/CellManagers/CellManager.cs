@@ -80,6 +80,13 @@ public class CellManager : MonoBehaviour
             .ElementAt(UnityEngine.Random.Range(0, cells.Count()));
 
     }
+    public void CreateItemInCells(int cellsCount, int level, ItemType itemType)
+    {
+        for (int i = 0; i < cellsCount; i++)
+        {
+            GetRandomCell(ItemType.Empty).CreateItem(level, itemType);
+        }
+    }
 
     private Vector2 FindStartPosition(float columnsCount, float rowsCount)
     {
@@ -93,6 +100,5 @@ public class CellManager : MonoBehaviour
         return new Vector2(col * (cellSize + cellMargin), -row * (cellSize + cellMargin));
     }
    
-
-  
+      
 }

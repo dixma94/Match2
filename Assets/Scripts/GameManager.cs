@@ -39,7 +39,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         StartGame();
-
     }
 
     private void PauseResumeGame()
@@ -53,38 +52,26 @@ public class GameManager : MonoBehaviour
         {
             stateSystem.ChangeState(GameState.Pause);
             return;
-        }
-        
+        } 
     }
 
     private void StartGame()
     {
-        //создаем поле для игры
         cellTableManager.CreateTable();
-        for (int i = 0; i < 20; i++)
-        {
-            cellTableManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Obstacle);
-        }
-        for (int i = 0; i < 5; i++)
-        {
-            cellTableManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
-        }
-        for (int i = 0; i < 3; i++)
-        {
-            cellTableManager.GetRandomCell(ItemType.Empty).CreateItem(2, ItemType.Ship);
-        }
-        cellTableManager.GetRandomCell(ItemType.Empty).CreateItem(3, ItemType.Ship);
-
-        //создаем поле для задания
+        cellTableManager.CreateItemInCells(20, 1, ItemType.Obstacle);
+        cellTableManager.CreateItemInCells(5, 1, ItemType.Ship);
+        cellTableManager.CreateItemInCells(3, 2, ItemType.Ship);
+        cellTableManager.CreateItemInCells(1,3, ItemType.Ship);
 
         taskManager.CreateTable();
         taskManager.CreateTask(levelSystem.gameLevel, 6);
 
         itemsManager.CreateTable();
-        itemsManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
+        itemsManager.CreateItemInCells(1, 1, ItemType.Ship);
 
         inventoryManager.CreateTable();
-        inventoryManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Rocket);
+        inventoryManager.CreateItemInCells(1, 1, ItemType.Rocket);
+
         stateSystem.ChangeState(GameState.Playing);
 
         GameSaveLoad.maximumScore = GameSaveLoad.LoadMovesCount();
