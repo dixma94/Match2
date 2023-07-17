@@ -11,7 +11,7 @@ public class MenuButtonUI : MonoBehaviour
     {
         button.onClick.AddListener(() => 
         {
-            gameManager.ChangeState(GameState.Pause);
+            gameManager.stateSystem.ChangeState(GameState.Pause);
         });
     }
 }

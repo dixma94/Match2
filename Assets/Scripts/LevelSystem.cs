@@ -20,12 +20,12 @@ public class LevelSystem
 {
     public Action MovesCountChanged;
     public int movesCount;
+    public GameLevel gameLevel;
     private int movesToObstacleMax;
     private int movesToObstacle;
     private TableCellManager tableCellManager;
     private TaskCellManager taskCellManager;
     private InventoryCellManager inventoryCellManager;
-    private GameLevel gameLevel;
 
 
     public LevelSystem(TableCellManager tableCellManager, TaskCellManager taskCellManager, InventoryCellManager inventoryCellManager)
@@ -33,6 +33,7 @@ public class LevelSystem
         movesCount = 0;
         movesToObstacle = 0;
         movesToObstacleMax = 8;
+        gameLevel = GameLevel.Level2;
         this.tableCellManager = tableCellManager;
         this.taskCellManager = taskCellManager;
         this.inventoryCellManager = inventoryCellManager;

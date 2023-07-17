@@ -771,6 +771,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinationCellManager: {fileID: 1241703903}
+  gameManager: {fileID: 2110875570}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1817,6 +1818,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinationCellManager: {fileID: 0}
+  gameManager: {fileID: 2110875570}
 --- !u!1 &1298746292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2396,8 +2398,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367156797}
-  - component: {fileID: 1367156798}
   - component: {fileID: 1367156796}
+  - component: {fileID: 1367156798}
   m_Layer: 0
   m_Name: Inventory
   m_TagString: Untagged
@@ -2453,6 +2455,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destinationCellManager: {fileID: 1241703903}
+  gameManager: {fileID: 2110875570}
 --- !u!1 &1437759628
 GameObject:
   m_ObjectHideFlags: 0
@@ -3817,13 +3820,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0e64b6e015200a439fc6a593a159665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellSpawnManager: {fileID: 1241703903}
+  cellTableManager: {fileID: 1241703903}
   taskManager: {fileID: 624267575}
   itemsManager: {fileID: 434520245}
   inventoryManager: {fileID: 1367156796}
   itemsDragDropHandler: {fileID: 434520246}
   tableDragDropHandler: {fileID: 1241703905}
-  movesToObstacleMax: 8
 --- !u!4 &2110875571
 Transform:
   m_ObjectHideFlags: 0

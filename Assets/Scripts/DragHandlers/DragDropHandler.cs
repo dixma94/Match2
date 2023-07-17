@@ -8,6 +8,8 @@ public class DragDropHandler : MonoBehaviour
     public Action TakeMove;
     [SerializeField]
     private protected TableCellManager destinationCellManager;
+    [SerializeField]
+    private protected GameManager gameManager;
 
     private protected CellManager cellManager;
     private protected Cell firstCell;

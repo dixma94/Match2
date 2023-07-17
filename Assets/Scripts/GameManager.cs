@@ -16,35 +16,24 @@ public enum GameState
 public class GameManager : MonoBehaviour
 {
 
-    public TableCellManager cellSpawnManager;
+    public TableCellManager cellTableManager;
     public TaskCellManager taskManager;
     public ItemsCellManager itemsManager;
     public InventoryCellManager inventoryManager;
     public ItemsDragDropHandler itemsDragDropHandler;
     public TableDragDropHandler tableDragDropHandler;
- 
-
-
-   
-    
-    public static GameState gameState;
-
-
-    public Action OnStateChanged;
-
-    private GameLevel gameLevel;
-
-
     public LevelSystem levelSystem;
+    public GameStateSystem stateSystem;
 
     private void Awake()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
 
-        levelSystem = new LevelSystem(cellSpawnManager, taskManager, inventoryManager);
+        levelSystem = new LevelSystem(cellTableManager, taskManager, inventoryManager);
+        stateSystem = new GameStateSystem();
         itemsDragDropHandler.TakeMove += levelSystem.Move;
         tableDragDropHandler.TakeMove += levelSystem.Move;
-        cellSpawnManager.gameOver += GameOver;
+        cellTableManager.gameOver += GameOver;
         InputHandler.Instance.EscKeyDown += PauseResumeGame;
     }
     private void Start()
@@ -52,84 +41,59 @@ public class GameManager : MonoBehaviour
         StartGame();
 
     }
-    public void ChangeState(GameState mode)
-    {
-        switch (mode)
-        {
-            case GameState.Pause:
-                gameState = GameState.Pause; 
-                break;
-            case GameState.Playing:
-                gameState = GameState.Playing;
-                break;
-            case GameState.Over:
-                gameState = GameState.Over;
-                break;
-        }
-           OnStateChanged?.Invoke();
-    }
 
     private void PauseResumeGame()
     {
-        if (gameState == GameState.Pause)
+        if (stateSystem.gameState == GameState.Pause)
         {
-            ChangeState(GameState.Playing);
+            stateSystem.ChangeState(GameState.Playing);
             return;
         }
-        if (gameState == GameState.Playing)
+        if (stateSystem.gameState == GameState.Playing)
         {
-            ChangeState(GameState.Pause);
+            stateSystem.ChangeState(GameState.Pause);
             return;
         }
-        
-    }
-    private void ResumeGame()
-    {
         
     }
 
     private void StartGame()
     {
-        gameLevel = GameLevel.Level2;
-
-
         //создаем поле для игры
-        cellSpawnManager.CreateTable();
+        cellTableManager.CreateTable();
         for (int i = 0; i < 20; i++)
         {
-            cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Obstacle);
+            cellTableManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Obstacle);
         }
         for (int i = 0; i < 5; i++)
         {
-            cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
+            cellTableManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
         }
         for (int i = 0; i < 3; i++)
         {
-            cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(2, ItemType.Ship);
+            cellTableManager.GetRandomCell(ItemType.Empty).CreateItem(2, ItemType.Ship);
         }
-        cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(3, ItemType.Ship);
+        cellTableManager.GetRandomCell(ItemType.Empty).CreateItem(3, ItemType.Ship);
 
         //создаем поле для задания
 
         taskManager.CreateTable();
-        taskManager.CreateTask(gameLevel, 6);
+        taskManager.CreateTask(levelSystem.gameLevel, 6);
 
         itemsManager.CreateTable();
         itemsManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
 
         inventoryManager.CreateTable();
         inventoryManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Rocket);
-        ChangeState(GameState.Playing);
+        stateSystem.ChangeState(GameState.Playing);
 
         GameSaveLoad.maximumScore = GameSaveLoad.LoadMovesCount();
 
     }
 
-    public void GameOver()
+    private void GameOver()
     {
-        ChangeState(GameState.Over);
-        
-    
+        stateSystem.ChangeState(GameState.Over);
     }
 
 

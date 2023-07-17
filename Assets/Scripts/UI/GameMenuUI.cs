@@ -28,19 +28,19 @@ public class GameMenuUI : MonoBehaviour
         });
         resumeButton.onClick.AddListener(() => 
         {
-            gameManager.ChangeState(GameState.Playing);
+            gameManager.stateSystem.ChangeState(GameState.Playing);
         });
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.OnStateChanged += UpdateVisual;
+        gameManager.stateSystem.OnStateChanged += UpdateVisual;
     }
 
     private void UpdateVisual()
     {
-        if (GameManager.gameState == GameState.Pause)
+        if (gameManager.stateSystem.gameState == GameState.Pause)
         {
             scoreText.text = "Score: " + gameManager.levelSystem.movesCount.ToString();
             maximumScoreText.text = "Maximum Score: "+ GameSaveLoad.maximumScore.ToString();

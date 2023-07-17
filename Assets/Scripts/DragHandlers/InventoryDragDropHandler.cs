@@ -8,7 +8,7 @@ public class InventoryDragDropHandler : DragDropHandler
 
     override private protected void PickUpShip(Vector2 vector)
     {
-        if (GameManager.gameState == GameState.Playing)
+        if (gameManager.stateSystem.gameState == GameState.Playing)
         {
 
 

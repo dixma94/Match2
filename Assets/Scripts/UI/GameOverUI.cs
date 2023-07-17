@@ -8,12 +8,12 @@ public class GameOverUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.OnStateChanged += UpdateVisual;
+        gameManager.stateSystem.OnStateChanged += UpdateVisual;
     }
 
     private void UpdateVisual()
     {
-        if (GameManager.gameState== GameState.Over)
+        if (gameManager.stateSystem.gameState== GameState.Over)
         {
             Show();
         }
