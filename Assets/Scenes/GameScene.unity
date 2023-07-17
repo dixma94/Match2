@@ -717,6 +717,7 @@ GameObject:
   m_Component:
   - component: {fileID: 434520244}
   - component: {fileID: 434520245}
+  - component: {fileID: 434520246}
   m_Layer: 0
   m_Name: Items
   m_TagString: Untagged
@@ -753,13 +754,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 3894650576433839945, guid: 9f894d3190a1e67489115248ab1c9dce, type: 3}
-  columnsCount: 1
-  rowsCount: 1
   cellMargin: 0
   cellSize: 2
-  TakeMove:
-    m_PersistentCalls:
-      m_Calls: []
+  columnsCount: 1
+  rowsCount: 1
+--- !u!114 &434520246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434520242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c08b29096845914ea8086e6ac4baabd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   destinationCellManager: {fileID: 1241703903}
 --- !u!1 &519420028
 GameObject:
@@ -1082,10 +1092,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 3894650576433839945, guid: 9f894d3190a1e67489115248ab1c9dce, type: 3}
-  columnsCount: 3
-  rowsCount: 3
   cellMargin: 0.1
   cellSize: 2
+  columnsCount: 3
+  rowsCount: 3
 --- !u!1 &651441994
 GameObject:
   m_ObjectHideFlags: 0
@@ -1754,6 +1764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1241703904}
   - component: {fileID: 1241703903}
+  - component: {fileID: 1241703905}
   m_Layer: 0
   m_Name: Table
   m_TagString: Untagged
@@ -1774,13 +1785,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 3894650576433839945, guid: 9f894d3190a1e67489115248ab1c9dce, type: 3}
-  columnsCount: 7
-  rowsCount: 7
   cellMargin: 0.1
   cellSize: 2
-  TakeMove:
-    m_PersistentCalls:
-      m_Calls: []
+  columnsCount: 7
+  rowsCount: 7
 --- !u!4 &1241703904
 Transform:
   m_ObjectHideFlags: 0
@@ -1796,6 +1804,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1241703905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1241703902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb0c102d8ab790b4a9c168afab0bca72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destinationCellManager: {fileID: 0}
 --- !u!1 &1298746292
 GameObject:
   m_ObjectHideFlags: 0
@@ -2375,6 +2396,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1367156797}
+  - component: {fileID: 1367156798}
   - component: {fileID: 1367156796}
   m_Layer: 0
   m_Name: Inventory
@@ -2396,15 +2418,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 227221925181841866, guid: bc67e1efaee4e7145a5d457ed85105b6, type: 3}
-  columnsCount: 1
-  rowsCount: 1
   cellMargin: 0
   cellSize: 2
-  destinationCellManager: {fileID: 1241703903}
+  columnsCount: 1
+  rowsCount: 1
   points: 4
-  TakeMove:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1367156797
 Transform:
   m_ObjectHideFlags: 0
@@ -2422,6 +2440,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1367156798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1367156793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30dc8530d96d76641b67b6f9e9d8a051, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destinationCellManager: {fileID: 1241703903}
 --- !u!1 &1437759628
 GameObject:
   m_ObjectHideFlags: 0
@@ -3787,15 +3818,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellSpawnManager: {fileID: 1241703903}
-  TaskManager: {fileID: 624267575}
-  ItemsManager: {fileID: 434520245}
-  InventoryManager: {fileID: 1367156796}
-  MovesCountChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  OnStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
+  taskManager: {fileID: 624267575}
+  itemsManager: {fileID: 434520245}
+  inventoryManager: {fileID: 1367156796}
+  itemsDragDropHandler: {fileID: 434520246}
+  tableDragDropHandler: {fileID: 1241703905}
   movesToObstacleMax: 8
 --- !u!4 &2110875571
 Transform:

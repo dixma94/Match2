@@ -94,31 +94,5 @@ public class CellManager : MonoBehaviour
     }
    
 
-    private void OnEnable()
-    {
-        InputHandler.Instance.ShipUp += PickUpShip;
-        InputHandler.Instance.ShipDrag += DragShip;
-        InputHandler.Instance.ShipDown += PickDownShip;
-    }
-
-    private void OnDisable()
-    {
-        InputHandler.Instance.ShipUp -= PickUpShip;
-        InputHandler.Instance.ShipDrag -= DragShip;
-        InputHandler.Instance.ShipDown -= PickDownShip;
-    }
-    private protected virtual void PickUpShip(Vector2 vector)
-    {
-        
-    }
-
-    private protected virtual void DragShip(Vector3 vector)
-    {
-        
-    }
-
-    private protected virtual void PickDownShip(Vector2 vector)
-    {
-        
-    }
+  
 }

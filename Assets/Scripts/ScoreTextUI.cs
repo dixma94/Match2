@@ -14,7 +14,7 @@ public class ScoreTextUI : MonoBehaviour
     {
         text = GetComponent<TextMeshProUGUI>();
         text.text = "Score: " + GameManager.movesCount.ToString();
-        gameManager.MovesCountChanged.AddListener(UpdateText);
+        gameManager.MovesCountChanged += UpdateText;
     }
 
     private void UpdateText()

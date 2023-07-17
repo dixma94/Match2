@@ -8,7 +8,7 @@ public class GameOverUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager.OnStateChanged.AddListener(UpdateVisual);
+        gameManager.OnStateChanged += UpdateVisual;
     }
 
     private void UpdateVisual()

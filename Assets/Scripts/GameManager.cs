@@ -28,9 +28,11 @@ public class GameManager : MonoBehaviour
 {
 
     public TableCellManager cellSpawnManager;
-    public TaskCellManager TaskManager;
-    public ItemsCellManager ItemsManager;
-    public InventoryCellManager InventoryManager;
+    public TaskCellManager taskManager;
+    public ItemsCellManager itemsManager;
+    public InventoryCellManager inventoryManager;
+    public ItemsDragDropHandler itemsDragDropHandler;
+    public TableDragDropHandler tableDragDropHandler;
  
 
     public static int movesCount;
@@ -38,8 +40,8 @@ public class GameManager : MonoBehaviour
     
     public static GameState gameState;
 
-    public UnityEvent MovesCountChanged;
-    public UnityEvent OnStateChanged;
+    public Action MovesCountChanged;
+    public Action OnStateChanged;
 
     private GameLevel gameLevel;
     [SerializeField] private int movesToObstacleMax;
@@ -51,8 +53,9 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        ItemsManager.TakeMove += TakeMove;
-        cellSpawnManager.TakeMove += TakeMove;
+
+        itemsDragDropHandler.TakeMove += TakeMove;
+        tableDragDropHandler.TakeMove += TakeMove;
         cellSpawnManager.gameOver += GameOver;
         InputHandler.Instance.EscKeyDown += PauseResumeGame;
         StartGame();
@@ -118,14 +121,14 @@ public class GameManager : MonoBehaviour
 
         //создаем поле для задания
 
-        TaskManager.CreateTable();
-        TaskManager.CreateTask(gameLevel, 6);
+        taskManager.CreateTable();
+        taskManager.CreateTask(gameLevel, 6);
 
-        ItemsManager.CreateTable();
-        ItemsManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
+        itemsManager.CreateTable();
+        itemsManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Ship);
 
-        InventoryManager.CreateTable();
-        InventoryManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Rocket);
+        inventoryManager.CreateTable();
+        inventoryManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Rocket);
         ChangeState(GameState.Playing);
 
         maximumScore = PlayerPrefs.GetInt(GAME_PREFS_MAX_SCORE);
@@ -160,15 +163,15 @@ public class GameManager : MonoBehaviour
             cellSpawnManager.GetRandomCell(ItemType.Empty).CreateItem(1, ItemType.Obstacle);
             movesToObstacle = 0;
         }
-        if (TaskManager.FindTask(cellSpawnManager))
+        if (taskManager.FindTask(cellSpawnManager))
         {
             
-            InventoryManager.points += 1;
-            InventoryManager.UpdateVisual();
+            inventoryManager.points += 1;
+            inventoryManager.UpdateVisual();
 
-            TaskManager.DiscardTable();
-            TaskManager.CreateTable();
-            TaskManager.CreateTask(gameLevel, 6);
+            taskManager.DiscardTable();
+            taskManager.CreateTable();
+            taskManager.CreateTask(gameLevel, 6);
         }
         
     }
