@@ -33,14 +33,14 @@ public class InventoryCellManager : CellManager
 
     private void Show()
     {
-        foreach (CellInventory item in cellsArray)
+        foreach (InventoryCell item in cellsArray)
         {
             item.Show();
         }
     }
     private void Hide()
     {
-        foreach (CellInventory item in cellsArray)
+        foreach (InventoryCell item in cellsArray)
         {
             item.Hide();
         }

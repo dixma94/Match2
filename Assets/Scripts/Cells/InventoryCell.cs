@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CellInventory : Cell
+public class InventoryCell : Cell
 {
     [SerializeField] private GameObject cell;
     [SerializeField] private GameObject back;

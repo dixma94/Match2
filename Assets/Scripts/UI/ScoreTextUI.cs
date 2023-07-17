@@ -13,13 +13,13 @@ public class ScoreTextUI : MonoBehaviour
     void Start()
     {
         text = GetComponent<TextMeshProUGUI>();
-        text.text = "Score: " + GameManager.movesCount.ToString();
-        gameManager.MovesCountChanged += UpdateText;
+        text.text = "Score: 0";
+        gameManager.levelSystem.MovesCountChanged += UpdateText;
     }
 
     private void UpdateText()
     {
-        text.text = "Score: " + GameManager.movesCount.ToString();
+        text.text = "Score: " + gameManager.levelSystem.movesCount.ToString();
     }
 
 }

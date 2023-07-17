@@ -42,8 +42,8 @@ public class GameMenuUI : MonoBehaviour
     {
         if (GameManager.gameState == GameState.Pause)
         {
-            scoreText.text = "Score: " + GameManager.movesCount.ToString();
-            maximumScoreText.text = "Maximum Score: "+ GameManager.maximumScore.ToString();
+            scoreText.text = "Score: " + gameManager.levelSystem.movesCount.ToString();
+            maximumScoreText.text = "Maximum Score: "+ GameSaveLoad.maximumScore.ToString();
             Show();
         }
         else
