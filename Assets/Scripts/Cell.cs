@@ -10,9 +10,8 @@ public class Cell : MonoBehaviour
     public GameObject[] obstacleArray;
     public GameObject[] rocketsArray;
     public int Level;
-
-    public int ArrayColIndex { get; set; }
-    public int ArrayRowIndex { get; set; }
+    public int arrayColIndex;
+    public int arrayRowIndex;
 
 
     public void CreateItem(int level,ItemType type)

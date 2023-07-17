@@ -12,7 +12,7 @@ public class TableCellManager : CellManager
 {
 
 
-    public UnityEvent TakeMove;
+    public Action TakeMove;
 
     private Cell firstCell;
     private Cell secondCell;

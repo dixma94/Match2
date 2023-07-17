@@ -31,8 +31,8 @@ public class CellManager : MonoBehaviour
                 newCell.transform.name = col.ToString() + " " + row.ToString();
                 newCell.transform.parent = transform;
                 newCell.coordinates = newPosition;
-                newCell.ArrayColIndex = col;
-                newCell.ArrayRowIndex = row;
+                newCell.arrayColIndex = col;
+                newCell.arrayRowIndex = row;
                 cellsArray[col, row] = newCell;
 
             }

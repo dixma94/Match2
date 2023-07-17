@@ -15,7 +15,7 @@ public class InventoryCellManager : CellManager
 
     public int points;
 
-    public UnityEvent TakeMove;
+    public Action TakeMove;
     public EventHandler<InventoryChangedArgs> InventoryChanged;
 
     public class InventoryChangedArgs : EventArgs

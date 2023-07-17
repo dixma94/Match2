@@ -51,8 +51,8 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Screen.orientation = ScreenOrientation.LandscapeLeft;
-        ItemsManager.TakeMove.AddListener(TakeMove);
-        cellSpawnManager.TakeMove.AddListener(TakeMove);
+        ItemsManager.TakeMove += TakeMove;
+        cellSpawnManager.TakeMove += TakeMove;
         cellSpawnManager.gameOver += GameOver;
         InputHandler.Instance.EscKeyDown += PauseResumeGame;
         StartGame();
