@@ -16,7 +16,9 @@ public class GameMenuUI : MonoBehaviour
 
   
 
-    private void Awake()
+
+    // Start is called before the first frame update
+    void Start()
     {
         exitButton.onClick.AddListener(() =>
         {
@@ -26,15 +28,10 @@ public class GameMenuUI : MonoBehaviour
         {
             SceneManager.LoadScene(1);
         });
-        resumeButton.onClick.AddListener(() => 
+        resumeButton.onClick.AddListener(() =>
         {
             gameManager.stateSystem.ChangeState(GameState.Playing);
         });
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
         gameManager.stateSystem.OnStateChanged += UpdateVisual;
     }
 
