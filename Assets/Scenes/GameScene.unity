@@ -3904,9 +3904,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellTableManager: {fileID: 1241703903}
-  cellTaskManager: {fileID: 0}
-  cellItemsManager: {fileID: 0}
-  CellInventoryManager: {fileID: 0}
+  cellTaskManager: {fileID: 624267575}
+  cellItemsManager: {fileID: 434520245}
+  CellInventoryManager: {fileID: 1367156796}
   itemsDragDropHandler: {fileID: 434520246}
   tableDragDropHandler: {fileID: 1241703905}
 --- !u!4 &2110875571

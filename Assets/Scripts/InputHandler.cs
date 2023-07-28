@@ -11,12 +11,24 @@ public class InputHandler : MonoBehaviour
     public Action<Vector2> ShipDown;
     public Action EscKeyDown;
 
-    public static InputHandler Instance { get; private set; }
-
-    private void Awake()
+    private static InputHandler instance;
+    public static InputHandler Instance 
     {
-        Instance = this;
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<InputHandler>();
+                 if (instance == null)
+                {
+                    instance = new GameObject().AddComponent<InputHandler>();
+                }
+            }
+            return instance;
+        }  
     }
+
+
 
     [SerializeField] private Camera _camera;
 
